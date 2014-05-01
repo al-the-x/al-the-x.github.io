@@ -47,7 +47,5 @@ This site is powered by [Jekyll](http://jekyllrb.com) because it's hosted as a G
 
 An interesting game. The only winning move is not to play.
 
-~~~~
-
 <script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<noscript>JavaScript? This is a README, for Pete's sake...</noscript>
+<noscript><small><em>JavaScript? This is a README, for Pete's sake...</em></small></noscript>
