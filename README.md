@@ -43,9 +43,9 @@ I prefer spaces unless the project uses tabs. I currently prefer two (2) spaces 
 This site is powered by [Jekyll](http://jekyllrb.com) because it's hosted as a Github repo. 
 
 
-#### Is `random(X)` better than `random(X)` for `X = "javascript php python ruby"`...?
+#### `return random(X) > random(X) let X = ("javascript", "php", "python", "ruby")`...?
 
-An interesting game. The only winning move is not to play.
+> A strange game. The only winning move is not to play. How about a nice game of chess?
 
 <script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<noscript><small><em>JavaScript? This is a README, for Pete's sake...</em></small></noscript>
+<noscript><!-- JavaScript? This is a README, for Pete's sake... --></noscript>
