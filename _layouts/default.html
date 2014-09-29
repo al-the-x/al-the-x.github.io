@@ -15,18 +15,27 @@
   <body>
     <div class="container">
       <header class="navbar navbar-default">
+        <div class="container-fluid">
         <section class="navbar-header">
           <a href="/" class="navbar-brand">AL the X</a>
+        </section>
+        <section>
+          <ul class="nav navbar-nav">
+            <li> <a href="/posts.html">Posts</a>
+          </ul>
+        </section>
 
-          <nav class="navbar-nav">
+        <section>
+          <nav class="navbar-nav navbar-right">
             <a class="btn btn-default" href="http://j.mp/al_the_x--github">
-              <i class="fa fa-github"></i> Github</a>
+              <i class="fa fa-github"></i> <span class="hidden-xs">Github</span></a>
             <a class="btn btn-default" href="http://j.mp/al_the_x--linkedin">
-              <i class="fa fa-linkedin"></i> LinkedIn</a>
+              <i class="fa fa-linkedin"></i> <span class="hidden-xs">LinkedIn</span></a>
             <a class="btn btn-default" href="http://j.mp/al_the_x--twitter">
-              <i class="fa fa-twitter"></i> Twitter</a>
+              <i class="fa fa-twitter"></i> <span class="hidden-xs">Twitter</span></a>
           </nav>
         </section>
+        <div> <!-- .container-fluid -->
       </header>
       <section>
         {{content}}
@@ -45,5 +54,7 @@
       pageTracker._trackPageview();
       } catch(err) {}
     </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
   </body>
 </html>
