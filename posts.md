@@ -2,5 +2,5 @@
 ---
 
 {% for post in site.posts %}
-* [{{post.title}}]({{post.url}})
+* _{{page.date | date_to_string}}_ -- [{{post.title}}]({{post.url}})
 {% endfor %}
