@@ -1,1 +1,9 @@
-### three weeks deep...
+### Three Weeks Deep...
+
+So here we are, three weeks into class at [The Iron Yard Orlando](http://theironyard.com/locations/orlando), and there's a whole lotta shaking going on. I'm still processing our first drop-out, while desperately trying to keep up with assigning classwork and grading homework. There's still a January class to fill for both JS and Ruby, and now my hand-picked Campus Director is being replaced by a complete stranger. It has been a strange couple of weeks for sure.
+
+I'm resolved to stay positive throughout this transition, however, and focus on the tasks at hand and organizing my thoughts into the difficult conversations that I am intent on having with the founders. I want to give the new CD my full support, but this maneuver does, in some ways, rattle my perception of Orlando as _my campus, my business, my baby_. I have no idea what this will do for the students, but I will have to be the anchor of morale for the team now, as we replace the known, trusted and respected pillar of the tech community with a surprise, someone the students and I have never met.
+
+I want to communicate what effect this has to my superiors, who have quickly become my friends, in the interest of improving the organization as a whole. That's the great opportunity of The Iron Yard at this stage, in my mind: I'm getting in early enough to help shape the organization but not so early that I have to cast the molds myself. All of us are doing this for the first time, in one way or another, and previous success or failure is no indicator of a system of success. We pivot, we adjust, we find what works.
+
+On the teaching front, the students have polarized into the "Front-Runners" and the "Strugglers", the former taking to JavaScript syntax and logical constructs more readily than the others, but the latter are all scrappy and attacking the material consistently with determination. Although I constantly reinforce the reality that we must _all_ cross the finish line together, the class has been very supportive of one another. I could ask for no better first cohort.
