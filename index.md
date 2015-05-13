@@ -38,16 +38,18 @@ For more information about me, you can check out <a href="http://j.mp/al_the_x">
 
 #### `vim` or `emacs`
 
-I prefer <codevim</code> in almost all occasions. See <a href="http://j.mp/1ktN7Xi">vimium</a>, <a href="http://j.mp/1ktNm4P">pocketvim</a>, etc. Learning <code>vim</code> mnemonics (I use the term loosely) requires a steep initial learning curve, however. For demonstration purposes, I defer to <code>emacs</code>-style editors like <a href="http://j.mp/1ktNH7t">Sublime Text</a> or <a href="http://j.mp/1ktNIZ0">TextMate</a>.</p>
+I think in `vim`. See [vimium](http://j.mp/1ktN7Xi), [pocketvim](http://j.mp/1ktNm4P), etc. Learning `vim` mnemonics (I use the term loosely) requires a steep initial learning curve, however. For demonstration purposes, I defer to `emacs`-style editors like [Sublime Text](http://j.mp/1ktNH7t) or [TextMate](http://j.mp/1ktNIZ0).
 
 #### Tabs or spaces?
 
 I prefer spaces unless the project uses tabs. I currently prefer two (2) spaces per indent. When teaching, I will typically use four (4) spaces per indent in PHP and Python and two (2) spaces per indent for JavaScript, HTML, and Ruby, owing to generally accepted language standards. Drupal makes me cry...
 
-#### Drupal, Wordpress, or somethine else?
+#### Drupal, Wordpress, or something else?
 
-This site is powered by <a href="http://jekyllrb.com">Jekyll</a> because it's hosted as a Github repo, but I regularly execute projects with Wordpress, Drupal, Django, Rails, and many other well-loved and heavily-disputed tools and frameworks. I tend to use what is best for the job at hand, regardless of the language... as long as it's OSS.
+This site is powered by [Jekyll](http://jekyllrb.com) because it's hosted as a Github repo, but I regularly execute projects with Wordpress, Drupal, Django, Rails, and many other well-loved and heavily-disputed tools and frameworks. I tend to use what is best for the job at hand, regardless of the language... as long as it's OSS.
 
-#### `return random(tech) > random(tech) for tech in ("javascript", "php", "python", "ruby")`
+#### Which is better?
+
+`return random(tech) > random(tech) for tech in ("javascript", "php", "python", "ruby")`
 
 > A strange game. The only winning move is not to play. How about a nice game of chess?
