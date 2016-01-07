@@ -1,0 +1,18 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+#   <name> -- <role> -- <twitter>
+
+    David Rogers -- Creator -- @al_the_x
+
+# THANKS
+
+    HTML5 Boilerplate Team
+    Yeoman Team
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5
+    jQuery, Modernizr, Normalize.css
