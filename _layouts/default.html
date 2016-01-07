@@ -13,9 +13,18 @@
         <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
         <!-- Place favicon.ico in the root directory -->
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+        <!-- build:css css/all.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="/bower_components/normalize-css/normalize.css">
+        <!-- endinject -->
+        <link rel="stylesheet" href="/css/main.css">
+        <!-- endbuild -->
+        <!-- build:js js/head.js -->
+        <!-- head:js -->
+        <script src="/bower_components/modernizr/modernizr.js"></script>
+        <script src="/bower_components/console-polyfill/index.js"></script>
+        <!-- endinject -->
+        <!-- endbuild -->
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -24,10 +33,15 @@
 
         {{ content }}
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <!-- build:js js/all.js -->
+        <!-- bower:js -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <!-- endinject -->
+        <!-- inject:js -->
+        <script src="/js/main.js"></script>
+        <script src="/js/plugins.js"></script>
+        <!-- endinject -->
+        <!-- endbuild -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

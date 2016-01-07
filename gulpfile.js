@@ -1,5 +1,9 @@
 var gulp = require('gulp'),
-    $ = require('gulp-load-plugins')(),
+    $ = require('gulp-load-plugins')({
+      rename: {
+        'gulp-google-cdn': 'cdn'
+      }
+    }),
     bower = require('main-bower-files')
     _ = require('lodash')
 
@@ -15,16 +19,17 @@ _.extend(bower, {
   }
 });
 
-gulp.task('bower', function(){
-  gulp.src('_layouts/default.html')
-    .pipe($.inject(gulp.src(bower.rest(), { read: false }), { name: 'bower' }))
-    .pipe(gulp.dest('_layouts'));
-});
-
 gulp.task('inject', function(){
   gulp.src('_layouts/default.html')
     .pipe($.inject(gulp.src(bower.head(), { read: false }), { name: 'head' }))
+    .pipe($.inject(gulp.src(bower.rest(), { read: false }), { name: 'bower' }))
     .pipe($.inject(gulp.src(['js/*.js' ], { read: false })))
+    .pipe($.cdn(require('./bower.json'), { cdn: require('cdnjs-cdn-data') }))
     .pipe(gulp.dest('_layouts'));
 });
 
+gulp.task('build', function(){
+  gulp.src('_layouts/default.html')
+    .pipe($.useref())
+    .pipe(gulp.dest('_layouts'));
+});
