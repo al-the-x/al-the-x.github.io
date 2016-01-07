@@ -1,7 +1,7 @@
 defaults:
   - scope:
       path: ""
-      type: [ "pages", "posts" ]
+      type: "pages"
     values:
       layout: "default"
 
