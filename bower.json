@@ -1,0 +1,27 @@
+{
+  "name": "@al-the-x/www",
+  "description": "Source files for http://al-the-x.me hosted on GitHub Pages",
+  "main": "gulpfile.js",
+  "authors": [
+    "David Rogers <hello@al-the-x.me> (http://al-the-x.me)"
+  ],
+  "license": "CC-BY-SA-4.0",
+  "homepage": "https://github.com/al-the-x/al-the-x.github.io",
+  "moduleType": [
+    "globals"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "modernizr": "components-modernizr#~2.8.3",
+    "normalize-css": "normalize.css#~3.0.3",
+    "console-polyfill": "~0.2.2"
+  }
+}

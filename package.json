@@ -20,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/al-the-x/al-the-x.github.io/issues"
   },
-  "homepage": "https://github.com/al-the-x/al-the-x.github.io#readme"
+  "homepage": "https://github.com/al-the-x/al-the-x.github.io#readme",
+  "devDependencies": {
+    "bower": "^1.7.2",
+    "gulp": "^3.9.0",
+    "gulp-inject": "^3.0.0",
+    "gulp-load-plugins": "^1.2.0",
+    "lodash": "^3.10.1",
+    "main-bower-files": "^2.11.1"
+  }
 }
