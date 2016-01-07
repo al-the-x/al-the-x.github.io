@@ -1,0 +1,24 @@
+{
+  "name": "@al-the-x/www",
+  "version": "0.0.0",
+  "description": "Source files for http://al-the-x.me hosted on GitHub Pages",
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "bundle exec jekyll serve",
+    "postinstall": "npm run install:bower",
+    "install:bower": "bower install",
+    "postinstall:bower": "gulp bower"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/al-the-x/al-the-x.github.io.git"
+  },
+  "keywords": [],
+  "author": "David Rogers <hello@al-the-x.me> (http://al-the-x.me/)",
+  "license": "CC-BY-SA-4.0",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/al-the-x/al-the-x.github.io/issues"
+  },
+  "homepage": "https://github.com/al-the-x/al-the-x.github.io#readme"
+}
