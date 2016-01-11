@@ -1,3 +1,13 @@
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - Session.vim
+  - bower.json
+  - gulpfile.js
+  - package.json
+  - bower_components/
+  - node_modules/
+
 defaults:
   - scope:
       path: ""
