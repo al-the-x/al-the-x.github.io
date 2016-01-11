@@ -1,14 +1,13 @@
 var gulp = require('gulp'),
-    $ = require('gulp-load-plugins')({
-      rename: {
-        'gulp-google-cdn': 'cdn'
-      }
-    }),
-    bower = require('main-bower-files')
+    $ = require('gulp-load-plugins')(),
+    bower = require('main-bower-files'),
+    del = require('del'),
     _ = require('lodash')
 
 _.extend(bower, {
-  important: function(path){ // Prioritized assets go in the `<head>`...
+  important: function(file){ // Prioritized assets go in the `<head>`...
+    var path = ( _.isString(file) ? file : file.path );
+
     return path.match(/modernizr|console-polyfill/);
   },
   head: function(){ // Just the `important` components...
@@ -19,17 +18,19 @@ _.extend(bower, {
   }
 });
 
-gulp.task('inject', function(){
-  gulp.src('_layouts/default.html')
-    .pipe($.inject(gulp.src(bower.head(), { read: false }), { name: 'head' }))
-    .pipe($.inject(gulp.src(bower.rest(), { read: false }), { name: 'bower' }))
-    .pipe($.inject(gulp.src(['js/*.js' ], { read: false })))
-    .pipe($.cdn(require('./bower.json'), { cdn: require('cdnjs-cdn-data') }))
-    .pipe(gulp.dest('_layouts'));
+gulp.task('clean', function(){
+  return del([ './css/*.css', './js/all.js', './js/head.js' ]);
 });
 
-gulp.task('build', function(){
-  gulp.src('_layouts/default.html')
-    .pipe($.useref())
-    .pipe(gulp.dest('_layouts'));
+gulp.task('build', [ 'clean' ], function(){
+  gulp.src(bower.head())
+    .pipe($.concat('js/head.js'))
+    .pipe(gulp.dest('.'));
+
+  gulp.src(bower.rest().concat([ './js/*.js', '!head.js' ]))
+    .pipe($.if(/css/, $.concat('css/vendor.css')))
+    .pipe($.if(/js/, $.concat('js/all.js')))
+  .pipe(gulp.dest('.'));
 });
+
+gulp.task('default', [ 'build' ]);

@@ -13,18 +13,11 @@
         <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
         <!-- Place favicon.ico in the root directory -->
 
-        <!-- build:css css/all.css -->
-        <!-- bower:css -->
-        <link rel="stylesheet" href="/bower_components/normalize-css/normalize.css">
-        <!-- endinject -->
+        <!-- TODO: Serve Pure et al via CDN link... -->
+        <link rel="stylesheet" href="/css/all.css">
         <link rel="stylesheet" href="/css/main.css">
-        <!-- endbuild -->
-        <!-- build:js js/head.js -->
-        <!-- head:js -->
-        <script src="/bower_components/modernizr/modernizr.js"></script>
-        <script src="/bower_components/console-polyfill/index.js"></script>
-        <!-- endinject -->
-        <!-- endbuild -->
+        <!-- TODO: Serve Modernizr et al via CDN link... -->
+        <script src="/js/head.js"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -33,15 +26,8 @@
 
         {{ content }}
 
-        <!-- build:js js/all.js -->
-        <!-- bower:js -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <!-- endinject -->
-        <!-- inject:js -->
-        <script src="/js/main.js"></script>
-        <script src="/js/plugins.js"></script>
-        <!-- endinject -->
-        <!-- endbuild -->
+        <!-- TODO: Serve JQuery et al via CDN link... -->
+        <script src="/js/all.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

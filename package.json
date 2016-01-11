@@ -24,11 +24,11 @@
   "devDependencies": {
     "bower": "^1.7.2",
     "cdnjs-cdn-data": "^0.1.2",
+    "del": "^2.2.0",
     "gulp": "^3.9.0",
-    "gulp-google-cdn": "^2.1.0",
-    "gulp-inject": "^3.0.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-if": "^2.0.0",
     "gulp-load-plugins": "^1.2.0",
-    "gulp-useref": "^3.0.4",
     "lodash": "^3.10.1",
     "main-bower-files": "^2.11.1"
   }
