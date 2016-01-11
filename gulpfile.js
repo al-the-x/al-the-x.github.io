@@ -25,7 +25,7 @@ gulp.task('clean', function(){
 gulp.task('build', [ 'clean' ], function(){
   gulp.src(bower.head())
     .pipe($.concat('js/head.js'))
-    .pipe(gulp.dest('.'));
+  .pipe(gulp.dest('.'));
 
   gulp.src(bower.rest().concat([ './js/*.js', '!head.js' ]))
     .pipe($.if(/css/, $.concat('css/vendor.css')))
