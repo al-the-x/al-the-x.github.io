@@ -33,4 +33,11 @@ gulp.task('build', [ 'clean' ], function(){
   .pipe(gulp.dest('.'));
 });
 
+gulp.task('build:watch', function(){
+  gulp.watch([
+    './js/*.js', '!{head,all}.js',
+    'bower.json'
+  ], [ 'build' ]);
+});
+
 gulp.task('default', [ 'build' ]);
