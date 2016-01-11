@@ -7,7 +7,7 @@
     "start": "bundle exec jekyll serve",
     "postinstall": "npm run install:bower",
     "install:bower": "bower install",
-    "postinstall:bower": "gulp inject"
+    "postinstall:bower": "gulp build"
   },
   "repository": {
     "type": "git",
