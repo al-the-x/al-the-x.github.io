@@ -21,7 +21,6 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "modernizr": "components-modernizr#~2.8.3",
-    "normalize-css": "normalize.css#~3.0.3",
     "console-polyfill": "~0.2.2"
   }
 }
