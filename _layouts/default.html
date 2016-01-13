@@ -31,7 +31,17 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        {{ content }}
+        <main class="container pure-g">
+          <header class="pure-u-1 header--page clearfix">
+            {% include avatar.html %}
+          </header>
+
+          {{ content }}
+
+          <footer class="page--footer clearfix pure-u-1">
+            {% include social.html %}
+          </footer>
+        </main><!-- .container.pure-g -->
 
         <!-- TODO: Serve JQuery et al via CDN link... -->
         <script src="/js/all.js"></script>
