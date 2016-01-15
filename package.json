@@ -10,7 +10,8 @@
     "browser-sync:start": "browser-sync start --proxy localhost:4000",
     "postinstall": "npm run install:bower",
     "install:bower": "bower install",
-    "postinstall:bower": "gulp build"
+    "postinstall:bower": "gulp build",
+    "build": "gulp build && bundle exec jekyll build"
   },
   "repository": {
     "type": "git",
