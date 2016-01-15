@@ -31,7 +31,11 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <main class="container pure-g">
+        <nav id="menu">
+          {% include slideout.html %}
+        </nav><!-- #menu -->
+
+        <main class="container pure-g" id="panel">
           <header class="pure-u-1 header--page clearfix">
             {% include avatar.html %}
           </header>
