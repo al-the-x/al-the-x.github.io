@@ -10,8 +10,17 @@
     font-size: 0;
 
     &::before {
-      font-size: xx-large;
+      display: inline-block;
+      text-align: center;
+
+      font-size: 4rem;
       content: "\2630";
+
+      @include mq-sm {
+        width: 1.25em; line-height: 1.25em;
+        background-color: transparentize(#EEE, 0.4);
+        border-radius: 0.2ex;
+      }
     }
   }
 
