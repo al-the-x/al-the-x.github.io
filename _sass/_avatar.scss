@@ -8,7 +8,7 @@ figure.avatar {
       text-align: center;
       margin: 0;
       float: left;
-      @media screen and (max-width: 35em){
+      @include mq-sm {
         font-size: 10vw;
         float: none;
       }
