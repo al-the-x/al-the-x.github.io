@@ -1,3 +1,23 @@
+#panel {
+  // TODO: Refactor to mixin or placeholder class?
+  .icon-only-menu {
+    position: absolute;
+    top: 1vw; right: 1vw;
+
+    text-decoration: none;
+    color: #666;
+
+    font-size: 0;
+
+    &::before {
+      font-size: xx-large;
+      content: "\2630";
+    }
+  }
+
+}
+
+// TODO: Replace with `index.css` from `Mango/slideout.js`...
 body {
   background-color: #FFF;
   width: 100%;
