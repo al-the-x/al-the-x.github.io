@@ -9901,6 +9901,7 @@ module.exports = exports["default"];
   var menu = new Slideout({
     menu: document.getElementById('menu'),
     panel: document.getElementById('panel'),
+    side: 'right',
   });
 
   setTimeout(function(){
