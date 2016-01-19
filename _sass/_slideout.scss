@@ -20,6 +20,8 @@
 #menu {
   background-color: $tan; color: $brown;
 
+  > * { // FIXME: Apply to text elements only?
+    padding: 0 1em;
   }
 
   // TODO: Refactor to mixin or placeholder class?
