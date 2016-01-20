@@ -1,3 +1,7 @@
+$slideout-trigger-fgcolor: lightgrey;
+$slideout-trigger-bgcolor: gray;
+$slideout-trigger-alpha: 0.2;
+
 #panel {
   // TODO: Refactor to mixin or placeholder class?
   .icon-only-menu {
@@ -5,7 +9,7 @@
     top: 1vw; right: 1vw;
 
     text-decoration: none;
-    color: $brown;
+    color: $slideout-trigger-fgcolor;
 
     font-size: 0;
 
@@ -18,7 +22,9 @@
 
       @include mq-sm {
         width: 1.25em; line-height: 1.25em;
-        background-color: transparentize(#EEE, 0.4);
+        background-color: transparentize(
+          $slideout-trigger-bgcolor, $slideout-trigger-alpha
+        );
         border-radius: 0.2ex;
       }
     }
