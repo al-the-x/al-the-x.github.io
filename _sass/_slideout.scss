@@ -6,7 +6,7 @@ $slideout-trigger-alpha: 0.2;
   // TODO: Refactor to mixin or placeholder class?
   .icon-only-menu {
     position: absolute;
-    top: 1vw; right: 1vw;
+    top: 0.5rem; right: 0.5rem;
 
     text-decoration: none;
     color: $slideout-trigger-fgcolor;
@@ -17,11 +17,12 @@ $slideout-trigger-alpha: 0.2;
       display: inline-block;
       text-align: center;
 
-      font-size: 4rem;
+      font-size: xx-large;
       content: "\2630";
 
       @include mq-sm {
-        width: 1.25em; line-height: 1.25em;
+        font-size: 12vw;
+        width: 15vw; line-height: 15vw;
         background-color: transparentize(
           $slideout-trigger-bgcolor, $slideout-trigger-alpha
         );
