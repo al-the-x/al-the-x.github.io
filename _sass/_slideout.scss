@@ -17,8 +17,9 @@ $slideout-trigger-alpha: 0.2;
       display: inline-block;
       text-align: center;
 
+      font-family: FontAwesome;
       font-size: xx-large;
-      content: "\2630";
+      content: "\f0c9";
 
       @include mq-sm {
         font-size: 12vw;
