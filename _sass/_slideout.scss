@@ -39,14 +39,27 @@ $slideout-trigger-alpha: 0.2;
   background-color: $tan; color: $brown;
   box-shadow: inset 5px 0px 20px -8px black;
 
-  > * { // FIXME: Apply to text elements only?
-    padding: 0 1em;
+  h4, a {
+    padding-left: 1rem;
+    margin-bottom: 0;
   }
 
   h4 {
     font-family: 'Yesteryear';
     font-weight: 400;
     font-size: 200%;
+
+    border-bottom: 1px solid;
+  }
+
+  a {
+    color: inherit;
+
+    display: block;
+    padding: {
+      top: 1ex;
+      bottom: 1ex;
+    }
   }
 
   // TODO: Refactor to mixin or placeholder class?
