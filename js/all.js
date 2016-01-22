@@ -9909,8 +9909,10 @@ jQuery.noConflict()(function($){
     .on('toggle.slideout', function(){
       $(this).data('menu').toggle();
     })
-    .on('click', 'a[rel="slideout-toggle"]', function(){
+    .on('click', 'a[rel="slideout-toggle"]', function(event){
       $document.trigger('toggle.slideout');
+
+      return false;
     })
   ; // END $document
 
