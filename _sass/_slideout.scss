@@ -39,6 +39,17 @@ $slideout-trigger-alpha: 0.2;
   background-color: $tan; color: $brown;
   box-shadow: inset 5px 0px 20px -8px black;
 
+  > section::after {
+    display: block;
+    text-align: center;
+
+    font-size: 3ex; line-height: 2ex;
+    border-top: 1px dotted;
+    margin: 0.5ex 0 1ex;
+
+    content: "\2766";
+  }
+
   h4, a {
     padding-left: 1rem;
     margin-bottom: 0;
