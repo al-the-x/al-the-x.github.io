@@ -1,6 +1,6 @@
-$slideout-trigger-fgcolor: lightgrey;
-$slideout-trigger-bgcolor: gray;
-$slideout-trigger-alpha: 0.2;
+$slideout-trigger-fgcolor: $bg-color;
+$slideout-trigger-bgcolor: $brown;
+$slideout-trigger-alpha: 0.6;
 
 #panel {
   // TODO: Refactor to mixin or placeholder class?
@@ -12,6 +12,10 @@ $slideout-trigger-alpha: 0.2;
     color: $slideout-trigger-fgcolor;
 
     font-size: 0;
+    color: transparentize(
+      $slideout-trigger-fgcolor, $slideout-trigger-alpha
+    );
+    background-color: $slideout-trigger-bgcolor;
 
     &::before {
       display: inline-block;
@@ -24,14 +28,9 @@ $slideout-trigger-alpha: 0.2;
       @include mq-sm {
         font-size: 12vw;
         width: 15vw; line-height: 15vw;
-        background-color: transparentize(
-          $slideout-trigger-bgcolor, $slideout-trigger-alpha
-        );
-        border-radius: 0.2ex;
       }
-    }
-  }
-
+    } // &::before
+  } // .icon-only-menu
 } // END #panel
 
 
