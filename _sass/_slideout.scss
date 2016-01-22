@@ -85,10 +85,13 @@ $slideout-trigger-alpha: 0.2;
   footer {
     background: $brown; color: $tan;
 
-    a {
-      @extend .icon-after-next;
-    }
+    position: fixed;
+    bottom: 0; width: inherit;
+
   }
+
+  // Back to parent: `#menu`...
+  padding-bottom: 10ex; // ...to account for `footer`
 
   // TODO: Refactor to mixin or placeholder class?
   .icon-after-next {
