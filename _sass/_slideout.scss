@@ -80,6 +80,10 @@ $slideout-trigger-alpha: 0.2;
     &:hover, &:active {
       background-color: $brown; color: $tan;
     }
+
+    &[rel*="external"] {
+      @extend .icon-after-next;
+    }
   }
 
   footer {
@@ -96,7 +100,7 @@ $slideout-trigger-alpha: 0.2;
   // TODO: Refactor to mixin or placeholder class?
   .icon-after-next {
     line-height: 1.5em;
-    &::before {
+    &::after {
       display: inline-block;
       margin: 0 0.25em;
       font-size: 1.5em;
