@@ -105,6 +105,10 @@ textarea {
 @import "slideout";
 // @import "something";
 
+body {
+  background-color: $bg-color; color: $fg-color;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
