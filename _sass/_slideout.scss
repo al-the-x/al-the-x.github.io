@@ -60,6 +60,11 @@ $slideout-trigger-alpha: 0.2;
       top: 1ex;
       bottom: 1ex;
     }
+
+    &:link, &:visited { }
+    &:hover, &:active {
+      background-color: $brown; color: $tan;
+    }
   }
 
   footer {
