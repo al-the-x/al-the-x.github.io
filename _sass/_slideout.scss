@@ -3,31 +3,23 @@ $slideout-trigger-bgcolor: $brown;
 $slideout-trigger-alpha: 0.6;
 
 #panel {
-  // TODO: Refactor to mixin or placeholder class?
   .icon-only-menu {
     position: absolute;
     top: 0.5rem; right: 0.5rem;
 
     text-decoration: none;
-    color: $slideout-trigger-fgcolor;
-
-    font-size: 0;
     color: transparentize(
       $slideout-trigger-fgcolor, $slideout-trigger-alpha
     );
     background-color: $slideout-trigger-bgcolor;
 
     &::before {
-      display: inline-block;
-      text-align: center;
-
-      font-family: FontAwesome;
       font-size: xx-large;
-      content: "\f0c9";
 
       @include mq-sm {
         font-size: 12vw;
         width: 15vw; line-height: 15vw;
+        text-shadow: 0 0 10px rbga(255,255,255,0.5);
       }
     } // &::before
   } // .icon-only-menu

@@ -52,6 +52,8 @@
   }
 }
 
+@include icon-fa('menu', "\f0c9", $only:true);
+
 @include icon-fa('email', "\f0e0");
 @include icon-fa('phone', "\f095");
 @include icon-fa('ask', "\f075");
