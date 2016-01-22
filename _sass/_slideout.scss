@@ -32,11 +32,12 @@ $slideout-trigger-alpha: 0.2;
     }
   }
 
-}
+} // END #panel
 
 
 #menu {
   background-color: $tan; color: $brown;
+  box-shadow: inset 5px 0px 20px -8px black;
 
   > * { // FIXME: Apply to text elements only?
     padding: 0 1em;
