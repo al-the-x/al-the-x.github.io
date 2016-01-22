@@ -10,30 +10,46 @@
   }
 }
 
-@mixin icon ($name, $char, $fa: false, $after: false){
-  $pseudo: if($after, 'after', 'before');
-
-  .icon-#{$name} {
+/**
+ * @param String $name for use in classname
+ * @param String $char for us in `content` property
+ * @param Boolean $only to hide text in the element
+ * @param Boolean $fa whether to use FontAwesome glyphs
+ */
+@mixin icon ($name, $char, $only:false, $fa:false){
+  .icon-#{if($only, "only-#{$name}", $name)} {
     line-height: 1.5;
-    @if ($fa){
-      /* TODO: Include FontAwesome fonts! */
-      font-family: FontAwesome;
+
+    @if ($only){
+      font-size: 0;
     }
 
-    &::#{$pseudo} {
+    &::before {
       content: $char;
 
+      @if ($fa){
+        /* TODO: Include FontAwesome fonts! */
+        font-family: FontAwesome;
+      }
+      font-size: if($only, normal, 150%);
+
       display: inline-block;
-      margin-right: 0.25em;
-      font-size: 150%;
+      @if ($only){
+        text-align: center;
+      }
+      @else {
+        margin-right: 0.25em;
+      }
 
       @content;
     }
   } // END .icon-#{$name}
 } // END icon
 
-@mixin icon-fa ($name, $char, $after:false){
-  @include icon($name, $char, $after:$after, $fa:true);
+@mixin icon-fa ($name, $char, $only:false){
+  @include icon($name, $char, $only, $fa:true){
+    @content;
+  }
 }
 
 @include icon-fa('email', "\f0e0");
