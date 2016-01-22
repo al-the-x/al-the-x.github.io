@@ -9914,6 +9914,15 @@ jQuery.noConflict()(function($){
     })
   ; // END $document
 
+  $document.on('click', 'a[rel*="track"]', function(){
+    if (!window.ga) return;
+
+    ga('save', 'event', $.extend({
+      eventCategory: 'link',
+      eventAction: 'click'
+    }, $(this).data));
+  }); // click(a[rel*="track"])
+
   if ( document.location.hash === '#menu' ){
     console.log('open');
     $document.trigger('toggle.slideout');
