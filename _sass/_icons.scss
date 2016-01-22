@@ -1,0 +1,64 @@
+// TODO: Refactor to mixin or placeholder class?
+.icon-after-next {
+  line-height: 1.5em;
+  &::after {
+    display: inline-block;
+    margin: 0 0.25em;
+    font-size: 1.5em;
+    content: "\276f";
+    float: right;
+  }
+}
+
+/**
+ * @param String $name for use in classname
+ * @param String $char for us in `content` property
+ * @param Boolean $only to hide text in the element
+ * @param Boolean $fa whether to use FontAwesome glyphs
+ */
+@mixin icon ($name, $char, $only:false, $fa:false){
+  .icon-#{if($only, "only-#{$name}", $name)} {
+    line-height: 1.5;
+
+    @if ($only){
+      font-size: 0;
+    }
+
+    &::before {
+      content: $char;
+
+      @if ($fa){
+        /* TODO: Include FontAwesome fonts! */
+        font-family: FontAwesome;
+      }
+      font-size: if($only, normal, 150%);
+
+      display: inline-block;
+      @if ($only){
+        text-align: center;
+      }
+      @else {
+        margin-right: 0.25em;
+      }
+
+      @content;
+    }
+  } // END .icon-#{$name}
+} // END icon
+
+@mixin icon-fa ($name, $char, $only:false){
+  @include icon($name, $char, $only, $fa:true){
+    @content;
+  }
+}
+
+@include icon-fa('menu', "\f0c9", $only:true);
+
+@include icon-fa('email', "\f0e0");
+@include icon-fa('phone', "\f095");
+@include icon-fa('ask', "\f075");
+@include icon-fa('twitter', "\f099");
+@include icon-fa('github', "\f09b");
+@include icon-fa('linkedin', "\f08c");
+@include icon-fa('stackoverflow', "\f16c");
+

@@ -1,58 +1,95 @@
+$slideout-trigger-fgcolor: $bg-color;
+$slideout-trigger-bgcolor: $brown;
+$slideout-trigger-alpha: 0.6;
+
 #panel {
-  // TODO: Refactor to mixin or placeholder class?
   .icon-only-menu {
     position: absolute;
-    top: 1vw; right: 1vw;
+    top: 0.5rem; right: 0.5rem;
 
     text-decoration: none;
-    color: $brown;
-
-    font-size: 0;
 
     &::before {
-      display: inline-block;
-      text-align: center;
+      font-size: 3rem;
+      width: 4rem; line-height: 3.75rem;
 
-      font-size: 4rem;
-      content: "\2630";
+      color: transparentize(
+        $slideout-trigger-fgcolor, $slideout-trigger-alpha
+      );
+      background-color: $slideout-trigger-bgcolor;
 
       @include mq-sm {
-        width: 1.25em; line-height: 1.25em;
-        background-color: transparentize(#EEE, 0.4);
-        border-radius: 0.2ex;
+        font-size: 12vw;
+        width: 15vw; line-height: 15vw;
       }
-    }
-  }
-
-}
+    } // &::before
+  } // .icon-only-menu
+} // END #panel
 
 
 #menu {
   background-color: $tan; color: $brown;
+  box-shadow: inset 5px 0px 20px -8px black;
 
-  > * { // FIXME: Apply to text elements only?
-    padding: 0 1em;
+  > section::after {
+    display: block;
+    text-align: center;
+
+    font-size: 3ex; line-height: 2ex;
+    border-top: 1px dotted;
+    margin: 0.5ex 0 1ex;
+
+    content: "\2766";
+  }
+
+  h4, a {
+    padding-left: 1rem;
+    margin-bottom: 0;
   }
 
   h4 {
+    background-color: $brown; color: $tan;
+
     font-family: 'Yesteryear';
     font-weight: 400;
     font-size: 200%;
+
+    margin-top: 0; padding-top: 1ex;
+
+    box-shadow: 0px 5px 20px -8px black;
   }
 
-  // TODO: Refactor to mixin or placeholder class?
-  .icon-after-next {
-    line-height: 1.5em;
-    &::before {
-      display: inline-block;
-      margin: 0 0.25em;
-      font-size: 1.5em;
-      content: "\276f";
-      float: right;
+  a {
+    color: inherit;
+
+    display: block;
+    padding: {
+      top: 1ex;
+      bottom: 1ex;
+    }
+
+    &:link, &:visited { }
+    &:hover, &:active {
+      background-color: $brown; color: $tan;
+    }
+
+    &[rel*="external"] {
+      @extend .icon-after-next;
     }
   }
 
-}
+  footer {
+    background: $brown; color: $tan;
+
+    position: fixed;
+    bottom: 0; width: inherit;
+
+  }
+
+  // Back to parent: `#menu`...
+  padding-bottom: 10ex; // ...to account for `footer`
+
+} // END #menu
 
 // TODO: Replace with `index.css` from `Mango/slideout.js`...
 body {
