@@ -62,6 +62,14 @@ $slideout-trigger-alpha: 0.2;
     }
   }
 
+  footer {
+    background: $brown; color: $tan;
+
+    a {
+      @extend .icon-after-next;
+    }
+  }
+
   // TODO: Refactor to mixin or placeholder class?
   .icon-after-next {
     line-height: 1.5em;
