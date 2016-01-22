@@ -97,17 +97,6 @@ $slideout-trigger-alpha: 0.2;
   // Back to parent: `#menu`...
   padding-bottom: 10ex; // ...to account for `footer`
 
-  // TODO: Refactor to mixin or placeholder class?
-  .icon-after-next {
-    line-height: 1.5em;
-    &::after {
-      display: inline-block;
-      margin: 0 0.25em;
-      font-size: 1.5em;
-      content: "\276f";
-      float: right;
-    }
-  }
 } // END #menu
 
 // TODO: Replace with `index.css` from `Mango/slideout.js`...
