@@ -9913,4 +9913,9 @@ jQuery.noConflict()(function($){
       $document.trigger('toggle.slideout');
     })
   ; // END $document
+
+  if ( document.location.hash === '#menu' ){
+    console.log('open');
+    $document.trigger('toggle.slideout');
+  }
 });
