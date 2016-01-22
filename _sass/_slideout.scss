@@ -8,18 +8,19 @@ $slideout-trigger-alpha: 0.6;
     top: 0.5rem; right: 0.5rem;
 
     text-decoration: none;
-    color: transparentize(
-      $slideout-trigger-fgcolor, $slideout-trigger-alpha
-    );
-    background-color: $slideout-trigger-bgcolor;
 
     &::before {
-      font-size: xx-large;
+      font-size: 3rem;
+      width: 4rem; line-height: 3.75rem;
+
+      color: transparentize(
+        $slideout-trigger-fgcolor, $slideout-trigger-alpha
+      );
+      background-color: $slideout-trigger-bgcolor;
 
       @include mq-sm {
         font-size: 12vw;
         width: 15vw; line-height: 15vw;
-        text-shadow: 0 0 10px rbga(255,255,255,0.5);
       }
     } // &::before
   } // .icon-only-menu
