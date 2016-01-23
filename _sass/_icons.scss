@@ -1,3 +1,32 @@
+[class*="icon-"] {
+  line-height: 1.5;
+
+  &::before, &::after {
+    /* TODO: Include FontAwesome fonts! */
+    font-family: FontAwesome;
+    font-size: 150%;
+
+    display: inline-block;
+    margin-right: 0.25em;
+  }
+
+  &[class*="only-"] {
+    font-size: 0;
+
+    &::before, &::after {
+      font-size: normal;
+      // relative `font-size` values don't work when parent `font-size` is 0
+
+      text-align: center;
+    }
+  }
+
+  &[class*="after-"] {
+    &::after {
+      margin: 0 0.25em;
+    }
+  }
+} // END [class*="icon-"]
 
 /**
  * @param String $name for use in classname
@@ -5,30 +34,14 @@
  * @param Boolean $only to hide text in the element
  * @param Boolean $fa whether to use FontAwesome glyphs
  */
-@mixin icon ($name, $char, $only:false, $fa:false){
-  .icon-#{if($only, "only-#{$name}", $name)} {
-    line-height: 1.5;
+@mixin icon ($name, $char, $only:false, $fa:false, $after:false){
+  $pseudo: if($after, after, before);
+  $name: if($after, "after-#{$name}", $name);
+  $name: if($only, "only-#{$name}", $name);
 
-    @if ($only){
-      font-size: 0;
-    }
-
-    &::before {
+  .icon-#{$name} {
+    &::#{$pseudo} {
       content: $char;
-
-      @if ($fa){
-        /* TODO: Include FontAwesome fonts! */
-        font-family: FontAwesome;
-      }
-      font-size: if($only, normal, 150%);
-
-      display: inline-block;
-      @if ($only){
-        text-align: center;
-      }
-      @else {
-        margin-right: 0.25em;
-      }
 
       @content;
     }
