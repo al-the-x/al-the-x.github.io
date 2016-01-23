@@ -74,6 +74,8 @@ $slideout-trigger-alpha: 0;
     }
 
     &[rel*="external"] {
+      @extend [class*="icon-"];
+      @extend [class*="icon-"][class*="after-"];
       @extend .icon-after-next;
     }
   }
