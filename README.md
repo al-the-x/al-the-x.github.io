@@ -2,7 +2,9 @@
 permalink: index.html
 ---
 
+<p class="summary">
 I help build the internet everyday using the power of my mind, a lot of typing, and copious handshakes and conversations. Swearing occasionally helps. I help organize nerds, run community events, and teach people. Sometimes I make money while doing it. Sometimes.
+</p>
 
 I am an internet application developer. I don't make websites; I build complex systems that automate key business operations. Most of them live on the web and interact with people through the browser, so I guess you can call them websites if you want.
 
