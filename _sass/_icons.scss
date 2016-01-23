@@ -1,14 +1,3 @@
-// TODO: Refactor to mixin or placeholder class?
-.icon-after-next {
-  line-height: 1.5em;
-  &::after {
-    display: inline-block;
-    margin: 0 0.25em;
-    font-size: 1.5em;
-    content: "\276f";
-    float: right;
-  }
-}
 
 /**
  * @param String $name for use in classname
@@ -52,6 +41,7 @@
   }
 }
 
+// .icon-only-menu
 @include icon-fa('menu', "\f0c9", $only:true);
 
 @include icon-fa('email', "\f0e0");
@@ -61,4 +51,9 @@
 @include icon-fa('github', "\f09b");
 @include icon-fa('linkedin', "\f08c");
 @include icon-fa('stackoverflow', "\f16c");
+
+// .icon-after-next
+@include icon('next', "\276f", $after:true){
+  float: right;
+}
 
