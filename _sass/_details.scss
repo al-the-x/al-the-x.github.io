@@ -1,0 +1,32 @@
+details, .details {
+  background-color: transparentize($light-blue, 0.4);
+
+  > {
+    * { display: none; }
+
+    summary, .summary {
+      display: block;
+
+      font-style: italic;
+
+      &::after {
+        display: block;
+
+        content: "\2774\22ef\2775";
+
+        color: $dark-blue;
+        font-size: 200%;
+        font-style: normal;
+        text-align: center;
+      }
+    }
+  }
+
+  &[open] > {
+    * { display: block; }
+
+    summary, .summary { &::after {
+      content: "\2774"; transform: rotate(90deg);
+    } }
+  }
+}
