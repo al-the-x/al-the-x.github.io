@@ -19,6 +19,7 @@ jQuery.noConflict()(function($){
     // END init slideout.js
 
     // TODO: Refactor to separate file?
+    // TODO: Select only for unsupported browsers?
     .on('click', 'summary, .summary', function(){
       $(this).closest('details, .details').trigger('toggle.details');
     })
