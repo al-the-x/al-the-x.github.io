@@ -28,7 +28,7 @@ details, .details {
     * { display: block; }
 
     summary, .summary { &::after {
-      content: "\2774"; transform: rotate(90deg);
+      content: "\2774"; transform: scale(8, 2) rotate(90deg);
     } }
   }
 }
