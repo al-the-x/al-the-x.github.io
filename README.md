@@ -2,11 +2,15 @@
 permalink: index.html
 ---
 
-<p class="summary">
+<div class="summary">
+<p>
 I help build the internet everyday using the power of my mind, a lot of typing, and copious handshakes and conversations. Swearing occasionally helps. I help organize nerds, run community events, and teach people. Sometimes I make money while doing it. Sometimes.
 </p>
 
+<p>
 I am an internet application developer. I don't make websites; I build complex systems that automate key business operations. Most of them live on the web and interact with people through the browser, so I guess you can call them websites if you want.
+</p>
+</div><!-- .summary -->
 
 My weapons of choice depend on the task at hand. I'm well-versed in PHP, Python, Javascript, SQL, NoSQL, and a ton of other technologies from Ubuntu to CSS. I use frameworks whenever practical -- Zend Framework, Django, Rails, jQuery, Angular -- and I write clean, objective, unit-tested code and take pragmatic approaches to solving problems. I use version control -- git, mostly -- for every project and use agile processes inspired by Scrum and XP with stories, points, and sprint cycles.
 
