@@ -43,6 +43,11 @@ jQuery.noConflict()(function($){
         eventAction:   'click'
       }, $(this).data));
     }) // click(a[rel*="track"])
+
+    // We only care about the _first_ `open` event, really...
+    .one('open.details', 'details, .details', function(){
+      $.track({ eventCategory: 'details', eventAction: 'open' });
+    })
   ; // END $document
 
   /**
