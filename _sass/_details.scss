@@ -10,14 +10,20 @@ details, .details {
 
       font-style: italic;
 
+      &::before, &::after {
+        color: $dark-blue;
+
+        font-style: normal;
+      }
+      &::before {
+        content: "\275D";
+      }
+
       &::after {
         display: block;
 
-        content: "\2774\22ef\2775";
+        content: "\25BE\25BE\25BE";
 
-        color: $dark-blue;
-        font-size: 200%;
-        font-style: normal;
         text-align: center;
       }
     }
@@ -28,7 +34,9 @@ details, .details {
     * { display: block; }
 
     summary, .summary { &::after {
-      content: "\2774"; transform: scale(8, 2) rotate(90deg);
+      content: "\22EF";
+
+      font-size: 150%;
     } }
   }
 }
