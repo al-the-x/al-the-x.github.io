@@ -2,18 +2,42 @@
 permalink: index.html
 ---
 
-<div class="summary">
-<p>
-I help build the internet everyday using the power of my mind, a lot of typing, and copious handshakes and conversations. Swearing occasionally helps. I help organize nerds, run community events, and teach people. Sometimes I make money while doing it. Sometimes.
-</p>
+<h2 class="summary"> I build robots that run your business while you sleep. </h2>
 
-<p>
-I am an internet application developer. I don't make websites; I build complex systems that automate key business operations. Most of them live on the web and interact with people through the browser, so I guess you can call them websites if you want.
-</p>
-</div><!-- .summary -->
+That's right. **I build robots**: _simple, easy-to-use computer systems that automate your key business operations_.
 
-My weapons of choice depend on the task at hand. I'm well-versed in PHP, Python, Javascript, SQL, NoSQL, and a ton of other technologies from Ubuntu to CSS. I use frameworks whenever practical -- Zend Framework, Django, Rails, jQuery, Angular -- and I write clean, objective, unit-tested code and take pragmatic approaches to solving problems. I use version control -- git, mostly -- for every project and use agile processes inspired by Scrum and XP with stories, points, and sprint cycles.
+* **I'm a _software generalist_ with a _broad range of knowledge and expertise_**, so I can **find or build a robot that's a _perfect fit_ for _your needs_**.
+* **I've worked _remotely_ on _distributed teams_, managed _off-shore teams_ and been _embedded on-site_**, so I understand the importance of:
+  * **accountability for deliverables and deadlines**
+  * **regular, consistent communication of progress**
+  * **face-to-face conversations for important decisions** and
+  * **critical in-person handoffs**.
+* **I've been teaching and mentoring developers _for years_**, so I can **guide and instruct _your team of developers_** or **help you _assemble your own team_**.
+* **I've been in the industry for a _long time_** so I still remember how to:
+  * **manage your shared-tenant hosting**
+  * **access your site via FTP or WHM** and
+  * **maintain your legacy codebase**.
+* **I've _stayed on top_ of emerging technologies and techniques** so that I can help you
+  * **modernize and _incrementally improve_ your _existing_ robots**
+  * **migrate _off_ shared hosting to the cloud** (if you need to)
+  * **update or replace key pieces of legacy code** and
+  * **educate your existing team on emerging best practices**.
 
-I'm also a community organizer, leading the PHP and Python user groups in town and helping to run coding dojos, which teach test-driven development and pair programming. I teach programming at Valencia College, winner of the 2013 Aspen Award, in a Web Development AS degree program I helped design. I speak at local and regional conferences whenever I can. I'm heavily invested in Orlando and well-connected to the development community here.
+### I've been building little pieces of the internet _since 1997_.
 
-As for hard skills, I'm constantly learning new languages and idioms for the ones I already know. I design and maintain High-Availability clusters for clients with multiple appliances and redundant failover systems. I've also been a professional freelancer for many years, so I'm well-versed in communicating with clients, extracting and refining project specifications from their heads, and coordinating multiple contributors across a project. I draw diagrams, write stories, edit wikis... And I've used every project management system you can think of.
+Using the power of my mind, a lot of typing, and copious conversations, **I build robots** that _automate_ manual, mundane, error prone parts of your business **so that _you can focus on what makes your business unique and successful_**.
+
+For _you_ that might mean:
+
+* _**publishing and tracking content automatically**_ so you can:
+  * **locate and engage your audience**
+  * **generate more leads** and
+  * **convert more customers**.
+* **building a robot that _adds a new, automated component_ to your business**,
+* **telling you what _existing_ robots to _buy_** and
+* **training _you_ on how to best use them to _grow your business_**.
+
+I can even **select and train _your in-house developers_** so that **_they_ can build _more_ robots _without_ me**.
+
+### Wouldn't you like a robot to do your work for you?
+
