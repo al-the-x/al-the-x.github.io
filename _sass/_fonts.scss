@@ -1,8 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Yesteryear|Permanent+Marker|Raleway:500,700|Bitter|Roboto:400,500,500italic,400italic);
 
-html, button, input, select, textarea,
-.pure-g [class*="pure-u-"] {
-  font-family: 'Roboto' !important;
+html, button, input, select, textarea {
+  font-family: 'Roboto';
+
+  // Larger fonts on smaller devices, please.
+  @include mq-sm {
+    font-size: 5vw;
+  }
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Raleway';
