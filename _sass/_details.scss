@@ -1,0 +1,23 @@
+// TODO: Make the transition more fluid with `transition` / `animation`?
+details, .details {
+  > {
+    * { display: none; }
+
+    summary, .summary {
+      display: block;
+
+      &::before {
+        content: "\25B6";
+      }
+    }
+  }
+
+  // TODO: Select only for unsupported browsers?
+  &[open] > {
+    * { display: block; }
+
+    summary, .summary { &::before {
+      content: "\25BC";
+    } }
+  }
+}

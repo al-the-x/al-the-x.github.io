@@ -1,0 +1,46 @@
+<h3> Wouldn't you like a robot to do your work for you? </h3>
+
+<section style="text-align: justify">
+{% capture text %}
+If you'll give me your name, email address, and a little bit about what you do,
+_I'll send you automation tips and techniques by email no more than once a week._
+
+If you like what you read or _really_ want a robot or two of your own, _just write
+me back_. Not only do _I promise to respond_, but _I'll make time to chat with you_
+about your business over the phone or by videoconference.
+{% endcapture %}
+{{ text | markdownify }}
+</section>
+
+<form class="pure-form pure-form-stacked" action="https://zapier.com/hooks/catch/22iv9l/" method="post">
+  <fieldset>
+    <label for="convert--name">your name:</label>
+    <input id="convert--name" class="pure-input-1"
+      type="text" name="name" placeholder="Johnny Five" required>
+  </fieldset>
+
+  <fieldset>
+    <label for="convert--email">your email:</label>
+    <input id="convert--email" class="pure-input-1"
+      type="email" name="email" placeholder="isalive@needmore.io" required>
+  </fieldset>
+
+  <fieldset>
+    <label for="convert--extended">about you:</label>
+    <textarea id="convert--about" class="pure-input-1" name="about" cols="30" rows="10"
+      placeholder="Tell me a little about yourself, Johnny. What kind of business do you run? Do you like robots?"></textarea>
+  </fieldset>
+
+  <fieldset>
+    <input type="hidden" name="respond" value="0">
+    <label class="pure-checkbox"><input type="checkbox" checked name="respond" value="1">
+      I'd like to chat with you about those robots&hellip; Call me!</label>
+  </fieldset>
+
+  <button class="page--conversion--cta pure-button pure-input-1">Start the conversation...</button>
+
+  <footer>
+    <small>I promise not to sell your email to anyone, spam you about products
+      you don't want, or make you an offer you can't refuse.</small>
+  </footer>
+</form>
