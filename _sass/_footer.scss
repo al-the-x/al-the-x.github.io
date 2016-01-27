@@ -1,7 +1,12 @@
 .page--footer {
+  @extend .clearfix;
+
   background-color: $dark-blue; color: #AAA;
 
   font-size: 80%;
+
+  box-sizing: border-box;
+  padding: 0 1rem;
 
   a { color: inherit; }
 
@@ -22,6 +27,9 @@
   }
 
   .page--footer--about {
+    max-width: 65em;
+    margin: 0 auto;
+
     @include mq-sm {
       text-align: center;
     }
