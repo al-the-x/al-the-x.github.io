@@ -3,9 +3,22 @@
 
   font-size: 80%;
 
+  a { color: inherit; }
+
   .page--footer--social {
     text-align: center;
     color: $light-blue;
+
+    a[class*="icon-"] {
+      font-size: 0;
+
+      &::before {
+        font-size: 65px;
+        @include mq-sm {
+          font-size: 18vw;
+        }
+      }
+    }
   }
 
   .page--footer--about {
@@ -22,16 +35,5 @@
       border-bottom: 1px dotted;
     }
   } // .page--footer--about
-
-  a {
-    color: inherit;
-    &[class*="icon-"] {
-      font-size: 0;
-
-      &::before {
-        font-size: 10vw;
-      }
-    }
-  }
 
 } // END .page--footer
