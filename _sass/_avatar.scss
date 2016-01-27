@@ -1,16 +1,28 @@
 figure.avatar {
-  img { width: 100%; }
+  max-width: 900px;
+  margin: 0;
+
+  img { // Responsive Images
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
   figcaption {
-    box-sizing: border-box;
-    padding-left: 1em;
     h1 {
       font-size: 7vw;
       text-align: center;
       margin: 0;
+
       float: left;
-      @include mq-sm {
-        font-size: 10vw;
+
+      @include mq-sm-only {
+        font-size: 12vw;
         float: none;
+      }
+
+      @include mq($min: 900px){
+        font-size: 70px;
       }
     }
     q {
