@@ -1,30 +1,13 @@
 // TODO: Make the transition more fluid with `transition` / `animation`?
 details, .details {
-  background-color: transparentize($light-blue, 0.4);
-
   > {
     * { display: none; }
 
     summary, .summary {
       display: block;
 
-      font-style: italic;
-
-      &::before, &::after {
-        color: $dark-blue;
-
-        font-style: normal;
-      }
       &::before {
-        content: "\275D";
-      }
-
-      &::after {
-        display: block;
-
-        content: "\25BE\25BE\25BE";
-
-        text-align: center;
+        content: "\25B6";
       }
     }
   }
@@ -33,10 +16,8 @@ details, .details {
   &[open] > {
     * { display: block; }
 
-    summary, .summary { &::after {
-      content: "\22EF";
-
-      font-size: 150%;
+    summary, .summary { &::before {
+      content: "\25BC";
     } }
   }
 }
