@@ -30,8 +30,12 @@ figure.avatar {
       font-weight: bold;
       font-size: 110%;
     }
-    footer {
-      clear: both;
+    aside {
+      font-size: 3vw;
+
+      @include mq($min: 900px) {
+        font-size: 20pt;
+      }
     }
   }
 }
