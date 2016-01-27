@@ -35,18 +35,18 @@
           {% include slideout.html %}
         </nav><!-- #menu -->
 
-        <main class="container pure-g" id="panel">
-          <header class="pure-u-1 header--page clearfix">
+        <main class="page--container pure-g" id="panel">
+          <header class="page--header pure-u-1 clearfix">
             <a href="#menu" rel="slideout-toggle" class="icon-only-menu">open menu</a>
 
             {% include avatar.html %}
           </header>
 
-          <article class="pure-u-1 details">
-          {{ content }}
+          <article class="page--copy pure-u-1 pure-u-md-2-3">
+            {{ content }}
           </article>
 
-          <aside class="page--conversion pure-u-md-1-3">
+          <aside class="page--conversion pure-u-1 pure-u-md-1-3">
             {% include contact.html %}
           </aside>
 
