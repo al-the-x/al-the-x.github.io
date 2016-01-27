@@ -55,6 +55,13 @@
         @include grid-unit-md(2,3);
       }
     }
+    .page--contact {
+      @extend %grid-container;
+
+      > * {
+        @include grid-unit-md(1,2);
+      }
+    }
   } // END .page--header
 
   .page--body {
