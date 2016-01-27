@@ -3,45 +3,25 @@
 
   font-size: 80%;
 
-  padding-bottom: 2ex;
-
-  &.clearfix::after {
-    display: block; text-align: center;
-
-    content: "完";
-
-    font-family: 'Permanent Marker';
-    font-size: 200%;
-    letter-spacing: 0; // FIXME: Remove when abandoning PureCSS
-
-    color: $yellow;
-  }
-
   .page--footer--social {
     text-align: center;
     color: $light-blue;
-
-    @include mq-sm {
-      width: 100%;
-    }
   }
 
   .page--footer--about {
     @include mq-sm {
       text-align: center;
-
-      box-sizing: border-box;
-      width: 100%;
-      padding: 0 2em;
     }
 
     h5 {
+      color: $yellow;
+
+      font-size: 150%;
+
       padding-bottom: 1ex;
       border-bottom: 1px dotted;
     }
-  }
-
-  h5 { color: $yellow; }
+  } // .page--footer--about
 
   a {
     color: inherit;
@@ -49,7 +29,7 @@
       font-size: 0;
 
       &::before {
-        font-size: 4rem;
+        font-size: 10vw;
       }
     }
   }
