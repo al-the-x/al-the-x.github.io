@@ -19,6 +19,14 @@
   }
 }
 
+@mixin grid-unit-lg ($span, $cols){
+  @include mq-lg {
+    @include grid-unit($span, $cols){
+      @content;
+    }
+  }
+}
+
 %grid-container {
   @extend .clearfix;
 
@@ -55,16 +63,4 @@
     max-width: 900px;
     margin: 0 auto;
   }
-
-  .page--footer {
-    @extend %grid-container;
-
-    .page--footer--social {
-      @include grid-unit-md(1,3);
-    }
-    .page--footer--about {
-
-      @include grid-unit-md(2,3);
-    }
-  } // END .page--footer
 }
