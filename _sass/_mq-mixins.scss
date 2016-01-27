@@ -1,23 +1,83 @@
-@mixin mq ($min-width: false, $max-width: false) {
-  @if $min-width and $max-width {
-    @media screen and (min-width: $min-width) and (max-width: $max-width) {
+// Super-Small (SS) Devices, e.g. Apple Watch
+$ss-max: 240px;
+
+// Small-sized (SM) Devices, e.g. Android / iOS / Windows
+$sm-min: $ss-max;
+$sm-max: 35em;
+
+// Medium-sized (MD) Devices, e.g. iPad / Nexus 10 / Surface
+$md-min: $sm-max;
+$md-max: 65em;
+
+// Large-sixed (LG) Devices, e.g. Laptops / Jumbo Tablets
+$lg-min: $md-max;
+$lg-max: 130em;
+
+// Extra-Large (XL) Devices, e.g. Mac Retina / HiDPI
+$xl-min: $lg-max;
+
+@mixin mq ($min: false, $max: false) {
+  @if $min and $max {
+    @media screen and (min-width: $min) and (max-width: $max) {
       @content;
     }
   }
-  @else if $min-width {
-    @media screen and (min-width: $min-width) {
+  @else if $min {
+    @media screen and (min-width: $min) {
       @content;
     }
   }
-  @else if $max-width {
-    @media screen and (max-width: $max-width) {
+  @else if $max {
+    @media screen and (max-width: $max) {
       @content;
     }
   }
 }
 
 @mixin mq-sm {
-  @include mq($max-width: 35em){
+  @include mq($max: $sm-max){
     @content;
   }
+}
+
+@mixin mq-sm-only {
+  @include mq-sm {
+    @content;
+  }
+}
+
+@mixin mq-md {
+  @include mq($min: $md-min){
+    @content;
+  }
+}
+
+@mixin mq-md-only {
+  @include mq($min: $md-min, $max: $md-max){
+    @content;
+  }
+}
+
+@mixin mq-lg {
+  @include mq($min: $lg-min){
+    @content;
+  }
+}
+
+@mixin mq-lg-only {
+  @include mq($min: $lg-min, $max: $lg-max){
+    @content;
+  }
+}
+
+@mixin mq-xl {
+  @include mq($min: $xl-min){
+    @content;
+  }
+}
+
+@mixin mq-xl-only {
+ @include mq-xl{
+   @content;
+ }
 }
