@@ -35,25 +35,29 @@
           {% include slideout.html %}
         </nav><!-- #menu -->
 
-        <main class="container pure-g" id="panel">
-          <header class="pure-u-1 header--page clearfix">
-            <a href="#menu" rel="slideout-toggle" class="icon-only-menu">open menu</a>
+        <main class="page--container" id="panel">
+          <a href="#menu" rel="slideout-toggle" class="icon-only-menu">open menu</a>
+
+          <header class="page--header">
 
             {% include avatar.html %}
           </header>
 
-          <article class="pure-u-1 details">
-          {{ content }}
-          </article>
+          <section class="page--body">
+            <article>
+            {{ content }}
+            </article>
 
-          <aside class="page--conversion pure-u-md-1-3">
-            {% include contact.html %}
-          </aside>
+            <aside class="page--conversion">
+              {% include contact.html %}
+            </aside>
 
-          <footer class="page--footer clearfix">
+          </section>
+
+          <footer class="page--footer">
             {% include footer.html %}
           </footer>
-        </main><!-- .container.pure-g -->
+        </main><!-- .page--container -->
 
         <!-- TODO: Serve JQuery et al via CDN link... -->
         <script src="/js/all.js"></script>
