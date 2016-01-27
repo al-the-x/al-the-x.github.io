@@ -39,5 +39,3 @@ For _you_ that might mean:
 
 I can even **select and train _your in-house developers_** so that **_they_ can build _more_ robots _without_ me**.
 
-### Wouldn't you like a robot to do your work for you?
-
