@@ -41,10 +41,11 @@ gulp.task('jade', function(){
   .pipe(gulp.dest('.'));
 });
 
-gulp.task('build', [ 'clean', 'bower:head', 'bower:rest' ]);
+gulp.task('build', [ 'clean', 'bower:head', 'bower:rest', 'jade' ]);
 
 gulp.task('build:watch', function(){
   gulp.watch([
+    './_jade/**/*.jade',
     './js/*.js', '!{head,all}.js',
     'bower.json'
   ], [ 'build' ]);
