@@ -1,0 +1,25 @@
+section.contact
+  h4 Get in touch…
+  | {% include contact.html %}
+
+  a.icon-ask(href="https://github.com/al-the-x/ama/issues/new", rel="track external",
+      data-event-label="contact",
+      data-event-value="ama"
+  ) Ask Me Anything!
+
+section.connect
+  h4 Connect with me…
+  |   {% include social.html %}
+
+footer.actions
+  //- TODO: enable when `book.al-the-x.me` is ready...
+    | a.icon-book(href="http://book.al-the-x.me/", rel="track",
+    |   data-event-label="cta"
+    |   data-event-value="booking"
+    | ) Get help!
+  //- FIXME: Use `thoughts.al-the-x.me` instead...
+    | a.icon-blog(href="http://thoughts.al-the-x.me/" rel="track"
+  a.icon-blog(href="http://al-the-x.tumblr.com", rel="track external",
+      data-event-label="cta",
+      data-event-value="blog"
+  ) Read my thoughts…
