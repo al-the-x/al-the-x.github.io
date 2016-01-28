@@ -1,0 +1,13 @@
+figure.avatar
+  picture
+    source(srcset="al-the-x--704x704.png", media="(min-width: 2100px)")
+    source(srcset="al-the-x--304x304.png", media="(min-wdith: 900px)")
+    source(srcset="al-the-x--120x120.png", media="(max-wdith: 480px) and (orientation: landscape)")
+    img.pure-img(src="al-the-x--304x304.png", alt="David Rogers aka `AL the X`")
+  figcaption
+    h1
+      | David Rogers
+      | aka
+      q AL the X
+    aside.page--contact
+      | {% include contact.html %}
