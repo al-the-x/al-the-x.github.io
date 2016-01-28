@@ -1,18 +1,7 @@
-aside.page--footer--social
-  | {% include social.html %}
+aside.page--footer--social {% include social.html %}
+
 article.page--footer--about
-  h5
-    | David Rogers aka 
-    q AL the X
-    |  is a 
-    strong
-      | freelance software
-      | developer
-    | , 
-    strong trainer and consultant
-    | ,
-    |     and dad living in 
-    strong Raleigh–Durham, NC
-    | .
-  small
-    | {% include license.html %}
+  :markdown-it(html)
+    ##### David Rogers aka <q>AL the X</q> is a **freelance software developer**, **trainer**, **consultant**, and dad living in **Raleigh–Durham, NC**.
+
+  small {% include license.html %}
