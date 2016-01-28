@@ -50,8 +50,9 @@ gulp.task('jade', function(){
 gulp.task('build', [ 'clean', 'bower:head', 'bower:rest', 'jade' ]);
 
 gulp.task('build:watch', function(){
+  gulp.watch([ './_jade/**/*.jade' ], [ 'jade' ]);
+
   gulp.watch([
-    './_jade/**/*.jade',
     './js/*.js', '!{head,all}.js',
     'bower.json'
   ], [ 'build' ]);
