@@ -35,6 +35,12 @@ gulp.task('bower:rest', function(){
   .pipe(gulp.dest('.'));
 });
 
+gulp.task('jade', function(){
+  gulp.src('./{_layouts,_includes}/*.jade')
+    .pipe($.jade({ pretty: true }))
+  .pipe(gulp.dest('.'));
+});
+
 gulp.task('build', [ 'clean', 'bower:head', 'bower:rest' ]);
 
 gulp.task('build:watch', function(){
