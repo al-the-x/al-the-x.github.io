@@ -22,13 +22,13 @@ gulp.task('clean', function(){
   return del([ './css/*.css', './js/all.js', './js/head.js' ]);
 });
 
-gulp.task('bower:head', function(){
+gulp.task('bower:head', [ 'clean' ], function(){
   return gulp.src(bower.head())
     .pipe($.concat('js/head.js'))
   .pipe(gulp.dest('.'));
 });
 
-gulp.task('bower:rest', function(){
+gulp.task('bower:rest', [ 'clean' ], function(){
   return gulp.src(bower.rest().concat([ './js/*.js', '!head.js' ]))
     .pipe($.if(/css/, $.concat('css/vendor.css')))
     .pipe($.if(/js/, $.concat('js/all.js')))
@@ -36,7 +36,7 @@ gulp.task('bower:rest', function(){
 });
 
 gulp.task('jade', function(){
-  gulp.src('./{_layouts,_includes}/*.jade')
+  gulp.src('./_jade/{_layouts,_includes}/**/*.jade')
     .pipe($.jade({ pretty: true }))
   .pipe(gulp.dest('.'));
 });
