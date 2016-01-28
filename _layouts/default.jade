@@ -1,0 +1,58 @@
+doctype html
+html.no-js(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="x-ua-compatible", content="ie=edge")
+    title David Rogers aka "AL the X"
+    meta(name="description", content="David Rogers aka 'AL the X' is a community organizer & nerd wrangler, instructional speaker & developer, and dad.")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="apple-touch-icon", href="al-the-x--76x76.png")
+    link(rel="apple-touch-icon", sizes="76x76", href="al-the-x--76x76.png")
+    link(rel="apple-touch-icon", sizes="120x120", href="al-the-x--120x120.png")
+    link(rel="apple-touch-icon", sizes="180x180", href="al-the-x--180x180.png")
+    //- TODO: Inject CDN links automatically...
+    link(rel="stylesheet", href="//yui.yahooapis.com/pure/0.6.0/pure-min.css")
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+    link(rel="stylesheet", href="/css/main.css")
+    //- TODO: Serve Modernizr et al via CDN link...
+    script(src="/js/head.js")
+  body
+    <!--[if lt IE 8]
+    p.browserupgrade
+      | You are using an
+      strong outdated
+      |  browser. Please
+      a(href="http://browsehappy.com/") upgrade your browser
+      |  to improve your experience.
+    <![endif]-->
+
+    nav#menu
+      | {% include slideout.html %}
+    //- #menu
+
+    main#panel.page--container
+      a.icon-only-menu(href="#menu", rel="slideout-toggle") open menu
+      header.page--header
+        | {% include avatar.html %}
+      section.page--body
+        article
+          | {{ content }}
+        |             {% comment %}
+        aside.page--conversion
+          | {% include conversion-form.html %}
+        |             {% endcomment %}
+      footer.page--footer
+        | {% include footer.html %}
+    //- .page--container
+
+    //- TODO: Serve JQuery et al via CDN link...
+    script(src="/js/all.js")
+
+    script.
+      if(window.location.hostname!=='localhost'){
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='https://www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-46027125-4','auto');ga('send','pageview');}

@@ -1,78 +1,40 @@
-<!doctype html>
-<html class="no-js" lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>David Rogers aka "AL the X"</title>
-        <meta name="description" content="David Rogers aka 'AL the X' is a community organizer & nerd wrangler, instructional speaker & developer, and dad.">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="apple-touch-icon" href="al-the-x--76x76.png">
-        <link rel="apple-touch-icon" sizes="76x76"   href="al-the-x--76x76.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="al-the-x--120x120.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="al-the-x--180x180.png">
-        <!-- Place favicon.ico in the root directory -->
-
-        <!-- TODO: Inject CDN links automatically... -->
-        <link rel="stylesheet" href="//yui.yahooapis.com/pure/0.6.0/pure-min.css">
-        <!--[if lte IE 8]>
-          <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-        <![endif]-->
-        <!--[if gt IE 8]><!-->
-          <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-        <!--<![endif]-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/css/main.css">
-        <!-- TODO: Serve Modernizr et al via CDN link... -->
-        <script src="/js/head.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-
-        <nav id="menu">
-          {% include slideout.html %}
-        </nav><!-- #menu -->
-
-        <main class="page--container" id="panel">
-          <a href="#menu" rel="slideout-toggle" class="icon-only-menu">open menu</a>
-
-          <header class="page--header">
-
-            {% include avatar.html %}
-          </header>
-
-          <section class="page--body">
-            <article>
-            {{ content }}
-            </article>
-
-            {% comment %}
-            <aside class="page--conversion">
-              {% include conversion-form.html %}
-            </aside>
-            {% endcomment %}
-
-          </section>
-
-          <footer class="page--footer">
-            {% include footer.html %}
-          </footer>
-        </main><!-- .page--container -->
-
-        <!-- TODO: Serve JQuery et al via CDN link... -->
-        <script src="/js/all.js"></script>
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            if(window.location.hostname!=='localhost'){
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='https://www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-46027125-4','auto');ga('send','pageview');}
-        </script>
-    </body>
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>David Rogers aka "AL the X"</title>
+    <meta name="description" content="David Rogers aka 'AL the X' is a community organizer &amp; nerd wrangler, instructional speaker &amp; developer, and dad.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="al-the-x--76x76.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="al-the-x--76x76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="al-the-x--120x120.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="al-the-x--180x180.png">
+    <link rel="stylesheet" href="//yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/head.js"></script>
+  </head>
+  <body><!--[if lt IE 8]
+    <p class="browserupgrade">You are using an<strong>outdated</strong> browser. Please<a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
+    <nav id="menu">{% include slideout.html %}</nav>
+    <main id="panel" class="page--container"><a href="#menu" rel="slideout-toggle" class="icon-only-menu">open menu</a>
+      <header class="page--header">{% include avatar.html %}</header>
+      <section class="page--body">
+        <article>{{ content }}</article>            {% comment %}
+        <aside class="page--conversion">{% include conversion-form.html %}</aside>            {% endcomment %}
+      </section>
+      <footer class="page--footer">{% include footer.html %}</footer>
+    </main>
+    <script src="/js/all.js"></script>
+    <script>
+      if(window.location.hostname!=='localhost'){
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='https://www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-46027125-4','auto');ga('send','pageview');}
+    </script>
+  </body>
 </html>
