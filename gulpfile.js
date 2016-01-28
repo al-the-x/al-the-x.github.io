@@ -37,7 +37,13 @@ gulp.task('bower:rest', [ 'clean' ], function(){
 
 gulp.task('jade', function(){
   gulp.src('./_jade/{_layouts,_includes}/**/*.jade')
-    .pipe($.jade({ pretty: true }))
+    .pipe($.jstransformer({
+      engine: 'jade',
+      pretty: true
+    }))
+    .pipe($.rename(function(path){
+      path.extname = '.html';
+    }))
   .pipe(gulp.dest('.'));
 });
 
