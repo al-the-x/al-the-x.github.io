@@ -22,16 +22,20 @@ gulp.task('clean', function(){
   return del([ './css/*.css', './js/all.js', './js/head.js' ]);
 });
 
-gulp.task('build', [ 'clean' ], function(){
-  gulp.src(bower.head())
+gulp.task('bower:head', function(){
+  return gulp.src(bower.head())
     .pipe($.concat('js/head.js'))
   .pipe(gulp.dest('.'));
+});
 
-  gulp.src(bower.rest().concat([ './js/*.js', '!head.js' ]))
+gulp.task('bower:rest', function(){
+  return gulp.src(bower.rest().concat([ './js/*.js', '!head.js' ]))
     .pipe($.if(/css/, $.concat('css/vendor.css')))
     .pipe($.if(/js/, $.concat('js/all.js')))
   .pipe(gulp.dest('.'));
 });
+
+gulp.task('build', [ 'clean', 'bower:head', 'bower:rest' ]);
 
 gulp.task('build:watch', function(){
   gulp.watch([
