@@ -1,19 +1,13 @@
 
-<h3> Wouldn't you like a robot to do your work for you? </h3>
-<section style="text-align: justify">
-  {% capture text %}
-  If you'll give me your name, email address, and a little bit about what you do,
-  _I'll send you automation tips and techniques by email no more than once a week._
-  If you like what you read or _really_ want a robot or two of your own, _just write
-  me back_. Not only do _I promise to respond_, but _I'll make time to chat with you_
-  about your business over the phone or by videoconference.
-  {% endcapture %}
-  {{ text | markdownify }}
+<h3> Wouldn't you like a robot to do your work for you?</h3>
+<section style="text-align: justify"><p>If you'll give me your name, email address, and a little bit about what you do, <em>I'll send you automation tips and techniques by email no more than once a week.</em></p>
+<p>If you like what you read or <em>really</em> want a robot or two of your own, <em>just write me back</em>. Not only do <em>I promise to respond</em>, but <em>I'll make time to chat with you</em> about your business over the phone or by videoconference.</p>
+
 </section>
 <form action="https://zapier.com/hooks/catch/22iv9l/" method="post" class="pure-form pure-form-stacked">
   <fieldset>
     <label for="convert--name">your name:</label>
-    <input id="convert--name" type="text" name="name" placeholder="Johnny Five" required="" class="pure-input-1"/>
+    <input id="convert--name" type="text" name="name" placeholder="Johnny Five" required="required" class="pure-input-1"/>
   </fieldset>
   <fieldset>
     <label for="convert--email">your email:</label>
@@ -26,11 +20,12 @@
   <fieldset>
     <input type="hidden" name="respond" value="0"/>
     <label class="pure-checkbox">
-      <input type="checkbox" checked="" name="respond" value="1"/>      I'd like to chat with you about those robots… Call me!
+      <input type="checkbox" checked="" name="respond" value="1"/>I'd like to chat with you about those robots… Call me!
     </label>
   </fieldset>
-  <button class="page--conversion--cta pure-button pure-input-1">Start the conversation...</button>
-  <footer><small>
+  <footer>
+    <button class="page--conversion--cta pure-button pure-input-1">Start the conversation...</button><small>
       I promise not to sell your email to anyone, spam you about products
-      you don't want, or make you an offer you can't refuse.</small></footer>
+      you don't want, or make you an offer you can't refuse.</small>
+  </footer>
 </form>
