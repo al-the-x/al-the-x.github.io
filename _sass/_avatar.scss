@@ -42,10 +42,23 @@ figure.avatar {
       font-size: 110%;
     }
     aside {
+      border-top: 0.2vw dotted $dark-blue;
+
       font-size: 3vw;
+
+      @include mq-sm {
+        font-size: 9vw;
+      }
 
       @include mq($min: 900px) {
         font-size: 20pt;
+      }
+
+      > a {
+        color: $dark-blue;
+        text-decoration: none;
+        text-align: center;
+        white-space: nowrap;
       }
     }
   }
