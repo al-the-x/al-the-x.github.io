@@ -18,32 +18,25 @@ html.no-js(lang="en")
     script(src="/js/head.js")
   body
     <!--[if lt IE 8]
-    p.browserupgrade
-      | You are using an
+    p.browserupgrade You are using an
       strong outdated
       |  browser. Please
       a(href="http://browsehappy.com/") upgrade your browser
       |  to improve your experience.
     <![endif]-->
 
-    nav#menu
-      | {% include slideout.html %}
+    nav#menu {% include slideout.html %}
     //- #menu
 
     main#panel.page--container
       a.icon-only-menu(href="#menu", rel="slideout-toggle") open menu
-      header.page--header
-        | {% include avatar.html %}
+      header.page--header {% include avatar.html %}
       section.page--body
-        article
-          | {{ content }}
-        |             {% comment %}
-        aside.page--conversion
-          | {% include conversion-form.html %}
-        |             {% endcomment %}
-      footer.page--footer
-        | {% include footer.html %}
-    //- .page--container
+        article {{ content }}
+        //- TODO: WHAT IS YOUR CONVERSION GOAL!?
+          aside.page--conversion {% include conversion-form.html %}
+      footer.page--footer {% include footer.html %}
+    //- #panel.page--container
 
     //- TODO: Serve JQuery et al via CDN link...
     script(src="/js/all.js")
