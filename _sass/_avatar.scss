@@ -10,6 +10,10 @@ figure.avatar {
 
   figcaption {
     h1 {
+      color: $tan;
+
+      text-shadow: 0.05ex 0.05ex 0 $brown;
+
       white-space: pre-line;
 
       font-size: 7vw;
@@ -29,6 +33,10 @@ figure.avatar {
       }
     }
     q {
+      color: $dark-blue;
+
+      text-shadow: 0.05ex 0.05ex 0 $yellow;
+
       font-family: 'Permanent Marker';
       font-weight: bold;
       font-size: 110%;
