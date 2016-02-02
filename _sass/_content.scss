@@ -1,8 +1,16 @@
-.page--body {
-  h1, h2, h3, h4, h5, h6 {
-    background-color: $dark-blue; color: $yellow;
+.page--container {
+  overflow: hidden;
 
-    margin: 0 -0.5em;
-    padding: 1ex 1em;
+  .page--header {
+    background-color: #ADF;
   }
-}
+
+  .page--body {
+    h1, h2, h3, h4, h5, h6 {
+      background-color: $dark-blue; color: $yellow;
+
+      margin: 0 -50%;
+      padding: 1ex 50%;
+    }
+  }
+} // END .page--container
