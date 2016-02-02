@@ -36,11 +36,8 @@
 // Layout Elements
 .page--container {
   > [class*="page--"] {
-    &:nth-of-type(1) {
+    &:first-child {
       padding-top: 1em;
-    }
-    &:nth-last-of-type(1) {
-      padding-bottom: 1em;
     }
   }
 
@@ -76,5 +73,9 @@
 
     max-width: 900px;
     margin: 0 auto;
+  }
+
+  .page--footer {
+    padding-bottom: 1ex;
   }
 }
