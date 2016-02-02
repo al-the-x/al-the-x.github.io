@@ -6,6 +6,12 @@ figure.avatar {
     display: block;
     width: 100%;
     height: auto;
+
+    @include mq-md {
+      padding: 0.2em;
+      border: 1px solid $tan;
+      box-shadow: inset 0 0 15px 5px $tan;
+    }
   }
 
   picture {
