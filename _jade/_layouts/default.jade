@@ -29,13 +29,13 @@ html.no-js(lang="en")
     //- #menu
 
     main#panel.page--container
-      a.icon-only-menu(href="#menu", rel="slideout-toggle") open menu
       header.page--header {% include avatar.html %}
       section.page--body
         article {{ content }}
         //- TODO: WHAT IS YOUR CONVERSION GOAL!?
           aside.page--conversion {% include conversion-form.html %}
       footer.page--footer {% include footer.html %}
+      a.icon-only-menu(href="#menu", rel="slideout-toggle") open menu
     //- #panel.page--container
 
     //- TODO: Serve JQuery et al via CDN link...
