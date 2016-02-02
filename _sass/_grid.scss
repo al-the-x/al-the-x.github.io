@@ -35,9 +35,11 @@
 
 // Layout Elements
 .page--container {
-  > [class*="page--"] {
-    &:first-child {
-      padding-top: 1em;
+  .page--header {
+    padding-top: 1em;
+
+    @include mq-sm {
+      padding-top: 0;
     }
   }
 
