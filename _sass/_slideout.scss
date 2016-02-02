@@ -1,5 +1,5 @@
-$slideout-trigger-fgcolor: $tan;
-$slideout-trigger-bgcolor: $brown;
+$slideout-trigger-fgcolor: $bg-color;
+$slideout-trigger-bgcolor: transparent;
 $slideout-trigger-alpha: 0;
 
 #panel {
@@ -13,10 +13,7 @@ $slideout-trigger-alpha: 0;
       font-size: 3rem;
       width: 4rem; line-height: 3.75rem;
 
-      color: transparentize(
-        $slideout-trigger-fgcolor, $slideout-trigger-alpha
-      );
-      background-color: $slideout-trigger-bgcolor;
+      color: $bg-color;
 
       @include mq-sm {
         font-size: 12vw;
@@ -95,7 +92,6 @@ $slideout-trigger-alpha: 0;
 
 // TODO: Replace with `index.css` from `Mango/slideout.js`...
 body {
-  background-color: #FFF;
   width: 100%;
   height: 100%;
 }
