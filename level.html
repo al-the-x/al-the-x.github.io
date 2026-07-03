@@ -4,179 +4,209 @@ permalink: /level
 
 <h2 class="summary">Spirit level</h2>
 
-<p id="level-status">Ready.</p>
-
-<canvas id="level-canvas" width="360" height="360" style="display:block;margin:1rem auto;max-width:100%;background:#111;border-radius:12px;"></canvas>
-
-<p style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
-  <button id="enable-motion" type="button">Enable motion</button>
-  <button id="toggle-fullscreen" type="button">Fullscreen</button>
-  <button id="toggle-orientation-lock" type="button">Lock orientation</button>
-</p>
+<div id="level-app"></div>
 
 <script src="https://unpkg.com/fulltilt@0.7.1/dist/fulltilt.min.js"></script>
-<script>
-  (function () {
-    var canvas = document.getElementById('level-canvas');
-    var ctx = canvas.getContext('2d');
-    var status = document.getElementById('level-status');
-    var enableMotionButton = document.getElementById('enable-motion');
-    var fullscreenButton = document.getElementById('toggle-fullscreen');
-    var orientationLockButton = document.getElementById('toggle-orientation-lock');
+<script src="https://unpkg.com/p5@1.11.7/lib/p5.min.js"></script>
+<script type="module">
+  import { h, render } from 'https://unpkg.com/preact@10.26.9/dist/preact.module.js';
+  import { useEffect, useMemo, useRef, useState } from 'https://unpkg.com/preact@10.26.9/hooks/dist/hooks.module.js';
 
-    var roll = 0;
-    var pitch = 0;
-    var started = false;
-    var orientationController;
-    var orientationLocked = false;
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
-    function clamp(value, min, max) {
-      return Math.min(max, Math.max(min, value));
-    }
+  const canRequestMotionPermission =
+    typeof DeviceOrientationEvent !== 'undefined' &&
+    typeof DeviceOrientationEvent.requestPermission === 'function';
 
-    function resize() {
-      var size = Math.min(window.innerWidth * 0.8, 420);
-      canvas.width = size;
-      canvas.height = size;
-    }
+  function LevelApp() {
+    const canvasContainerRef = useRef(null);
+    const sketchRef = useRef(null);
+    const orientationRef = useRef({ roll: 0, pitch: 0 });
+    const orientationControllerRef = useRef(null);
+    const intervalRef = useRef(null);
 
-    function draw() {
-      var w = canvas.width;
-      var h = canvas.height;
-      var cx = w / 2;
-      var cy = h / 2;
-      var outerRadius = Math.min(w, h) / 2 - 16;
-      var moveRadius = outerRadius * 0.78;
-      var x = cx + (clamp(roll, -45, 45) / 45) * moveRadius;
-      var y = cy + (clamp(pitch, -45, 45) / 45) * moveRadius;
+    const [roll, setRoll] = useState(0);
+    const [pitch, setPitch] = useState(0);
+    const [started, setStarted] = useState(false);
+    const [status, setStatus] = useState('Ready.');
+    const [orientationLocked, setOrientationLocked] = useState(false);
 
-      ctx.clearRect(0, 0, w, h);
+    const lockButtonLabel = useMemo(
+      () => (orientationLocked ? 'Unlock orientation' : 'Lock orientation'),
+      [orientationLocked]
+    );
 
-      ctx.fillStyle = '#0f172a';
-      ctx.fillRect(0, 0, w, h);
+    useEffect(() => {
+      const sketch = new p5((p) => {
+        const getSize = () => Math.min(window.innerWidth * 0.8, 420);
 
-      ctx.strokeStyle = '#334155';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.arc(cx, cy, outerRadius, 0, Math.PI * 2);
-      ctx.stroke();
+        const drawLevel = () => {
+          const width = p.width;
+          const height = p.height;
+          const centerX = width / 2;
+          const centerY = height / 2;
+          const outerRadius = Math.min(width, height) / 2 - 16;
+          const moveRadius = outerRadius * 0.78;
+          const x = centerX + (clamp(orientationRef.current.roll, -45, 45) / 45) * moveRadius;
+          const y = centerY + (clamp(orientationRef.current.pitch, -45, 45) / 45) * moveRadius;
 
-      ctx.strokeStyle = '#475569';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(cx - outerRadius, cy);
-      ctx.lineTo(cx + outerRadius, cy);
-      ctx.moveTo(cx, cy - outerRadius);
-      ctx.lineTo(cx, cy + outerRadius);
-      ctx.stroke();
+          p.background('#0f172a');
 
-      ctx.fillStyle = '#22c55e';
-      ctx.beginPath();
-      ctx.arc(x, y, outerRadius * 0.13, 0, Math.PI * 2);
-      ctx.fill();
+          p.stroke('#334155');
+          p.strokeWeight(3);
+          p.noFill();
+          p.circle(centerX, centerY, outerRadius * 2);
 
-      ctx.fillStyle = '#e2e8f0';
-      ctx.font = '16px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('roll: ' + roll.toFixed(1) + '°', cx, h - 34);
-      ctx.fillText('pitch: ' + pitch.toFixed(1) + '°', cx, h - 14);
+          p.stroke('#475569');
+          p.strokeWeight(1);
+          p.line(centerX - outerRadius, centerY, centerX + outerRadius, centerY);
+          p.line(centerX, centerY - outerRadius, centerX, centerY + outerRadius);
 
-      requestAnimationFrame(draw);
-    }
+          p.noStroke();
+          p.fill('#22c55e');
+          p.circle(x, y, outerRadius * 0.26);
 
-    function updateOrientationLockButton() {
-      orientationLockButton.textContent = orientationLocked ? 'Unlock orientation' : 'Lock orientation';
-    }
+          p.fill('#e2e8f0');
+          p.textAlign(p.CENTER, p.CENTER);
+          p.textSize(16);
+          p.text(`roll: ${orientationRef.current.roll.toFixed(1)}°`, centerX, height - 34);
+          p.text(`pitch: ${orientationRef.current.pitch.toFixed(1)}°`, centerX, height - 14);
+        };
 
-    function start() {
+        p.setup = () => {
+          p.createCanvas(getSize(), getSize()).parent(canvasContainerRef.current);
+        };
+
+        p.windowResized = () => {
+          p.resizeCanvas(getSize(), getSize());
+        };
+
+        p.draw = () => {
+          drawLevel();
+        };
+      });
+
+      sketchRef.current = sketch;
+
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+
+        if (orientationControllerRef.current && typeof orientationControllerRef.current.stop === 'function') {
+          orientationControllerRef.current.stop();
+        }
+
+        sketch.remove();
+      };
+    }, []);
+
+    const startOrientation = () => {
       if (started) {
         return;
       }
 
-      started = true;
-      status.textContent = 'Starting orientation sensor...';
-
       if (typeof FULLTILT === 'undefined' || !FULLTILT.DeviceOrientation) {
-        status.textContent = 'Orientation library did not load.';
+        setStatus('Orientation library did not load.');
         return;
       }
 
-      orientationController = new FULLTILT.DeviceOrientation({ type: 'game' });
-      orientationController.start(function () {
-        status.textContent = 'Move your phone to use the level.';
-      }, function () {
-        status.textContent = 'Orientation API is unavailable on this device/browser.';
-      });
+      setStarted(true);
+      setStatus('Starting orientation sensor...');
 
-      setInterval(function () {
-        if (!orientationController) {
-          return;
+      const orientationController = new FULLTILT.DeviceOrientation({ type: 'game' });
+      orientationControllerRef.current = orientationController;
+
+      orientationController.start(
+        () => {
+          setStatus('Move your phone to use the level.');
+
+          intervalRef.current = window.setInterval(() => {
+            const euler = orientationController.getScreenAdjustedEuler();
+
+            if (!euler) {
+              return;
+            }
+
+            const nextPitch = euler.beta || 0;
+            const nextRoll = euler.gamma || 0;
+
+            orientationRef.current = { roll: nextRoll, pitch: nextPitch };
+            setRoll(nextRoll);
+            setPitch(nextPitch);
+          }, 50);
+        },
+        () => {
+          setStatus('Orientation API is unavailable on this device/browser.');
+          setStarted(false);
         }
+      );
+    };
 
-        var euler = orientationController.getScreenAdjustedEuler();
-        if (!euler) {
-          return;
-        }
+    const onEnableMotion = async () => {
+      if (canRequestMotionPermission) {
+        try {
+          const permission = await DeviceOrientationEvent.requestPermission();
 
-        pitch = euler.beta || 0;
-        roll = euler.gamma || 0;
-      }, 50);
-    }
-
-    enableMotionButton.addEventListener('click', function () {
-      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        DeviceOrientationEvent.requestPermission().then(function (permissionState) {
-          if (permissionState === 'granted') {
-            start();
-          } else {
-            status.textContent = 'Motion permission denied.';
+          if (permission !== 'granted') {
+            setStatus('Motion permission denied.');
+            return;
           }
-        }).catch(function () {
-          status.textContent = 'Could not request motion permission.';
-        });
-      } else {
-        start();
-      }
-    });
-
-    fullscreenButton.addEventListener('click', function () {
-      if (!document.fullscreenElement) {
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen();
+        } catch (error) {
+          setStatus('Could not request motion permission.');
+          return;
         }
-      } else if (document.exitFullscreen) {
-        document.exitFullscreen();
       }
-    });
 
-    orientationLockButton.addEventListener('click', function () {
-      if (!screen.orientation || !screen.orientation.lock) {
-        status.textContent = 'Orientation lock is not supported in this browser.';
+      startOrientation();
+    };
+
+    const onToggleFullscreen = async () => {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen?.();
+        return;
+      }
+
+      await document.exitFullscreen?.();
+    };
+
+    const onToggleOrientationLock = async () => {
+      if (!screen.orientation?.lock) {
+        setStatus('Orientation lock is not supported in this browser.');
         return;
       }
 
       if (!orientationLocked) {
-        screen.orientation.lock('portrait-primary').then(function () {
-          orientationLocked = true;
-          updateOrientationLockButton();
-        }).catch(function () {
-          status.textContent = 'Could not lock orientation (fullscreen may be required).';
-        });
+        try {
+          await screen.orientation.lock('portrait-primary');
+          setOrientationLocked(true);
+        } catch (error) {
+          setStatus('Could not lock orientation (fullscreen may be required).');
+        }
+
         return;
       }
 
-      if (screen.orientation.unlock) {
-        screen.orientation.unlock();
-      }
+      screen.orientation.unlock?.();
+      setOrientationLocked(false);
+    };
 
-      orientationLocked = false;
-      updateOrientationLockButton();
-    });
+    return h('div', null,
+      h('p', { id: 'level-status' }, status),
+      h('div', {
+        ref: canvasContainerRef,
+        style: 'display:block;margin:1rem auto;max-width:100%;width:max-content;background:#111;border-radius:12px;overflow:hidden;'
+      }),
+      h('p', {
+        style: 'display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;'
+      },
+        h('button', { type: 'button', onClick: onEnableMotion }, started ? 'Motion enabled' : 'Enable motion'),
+        h('button', { type: 'button', onClick: onToggleFullscreen }, 'Fullscreen'),
+        h('button', { type: 'button', onClick: onToggleOrientationLock }, lockButtonLabel)
+      ),
+      h('p', { style: 'text-align:center;margin-top:.5rem;' }, `roll ${roll.toFixed(1)}°, pitch ${pitch.toFixed(1)}°`)
+    );
+  }
 
-    window.addEventListener('resize', resize);
-
-    resize();
-    updateOrientationLockButton();
-    draw();
-  })();
+  render(h(LevelApp), document.getElementById('level-app'));
 </script>
