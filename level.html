@@ -1,0 +1,182 @@
+---
+permalink: /level
+---
+
+<h2 class="summary">Spirit level</h2>
+
+<p id="level-status">Ready.</p>
+
+<canvas id="level-canvas" width="360" height="360" style="display:block;margin:1rem auto;max-width:100%;background:#111;border-radius:12px;"></canvas>
+
+<p style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
+  <button id="enable-motion" type="button">Enable motion</button>
+  <button id="toggle-fullscreen" type="button">Fullscreen</button>
+  <button id="toggle-orientation-lock" type="button">Lock orientation</button>
+</p>
+
+<script src="https://unpkg.com/fulltilt@0.7.1/dist/fulltilt.min.js"></script>
+<script>
+  (function () {
+    var canvas = document.getElementById('level-canvas');
+    var ctx = canvas.getContext('2d');
+    var status = document.getElementById('level-status');
+    var enableMotionButton = document.getElementById('enable-motion');
+    var fullscreenButton = document.getElementById('toggle-fullscreen');
+    var orientationLockButton = document.getElementById('toggle-orientation-lock');
+
+    var roll = 0;
+    var pitch = 0;
+    var started = false;
+    var orientationController;
+    var orientationLocked = false;
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function resize() {
+      var size = Math.min(window.innerWidth * 0.8, 420);
+      canvas.width = size;
+      canvas.height = size;
+    }
+
+    function draw() {
+      var w = canvas.width;
+      var h = canvas.height;
+      var cx = w / 2;
+      var cy = h / 2;
+      var outerRadius = Math.min(w, h) / 2 - 16;
+      var moveRadius = outerRadius * 0.78;
+      var x = cx + (clamp(roll, -45, 45) / 45) * moveRadius;
+      var y = cy + (clamp(pitch, -45, 45) / 45) * moveRadius;
+
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(cx, cy, outerRadius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx - outerRadius, cy);
+      ctx.lineTo(cx + outerRadius, cy);
+      ctx.moveTo(cx, cy - outerRadius);
+      ctx.lineTo(cx, cy + outerRadius);
+      ctx.stroke();
+
+      ctx.fillStyle = '#22c55e';
+      ctx.beginPath();
+      ctx.arc(x, y, outerRadius * 0.13, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '16px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('roll: ' + roll.toFixed(1) + '°', cx, h - 34);
+      ctx.fillText('pitch: ' + pitch.toFixed(1) + '°', cx, h - 14);
+
+      requestAnimationFrame(draw);
+    }
+
+    function updateOrientationLockButton() {
+      orientationLockButton.textContent = orientationLocked ? 'Unlock orientation' : 'Lock orientation';
+    }
+
+    function start() {
+      if (started) {
+        return;
+      }
+
+      started = true;
+      status.textContent = 'Starting orientation sensor...';
+
+      if (typeof FULLTILT === 'undefined' || !FULLTILT.DeviceOrientation) {
+        status.textContent = 'Orientation library did not load.';
+        return;
+      }
+
+      orientationController = new FULLTILT.DeviceOrientation({ type: 'game' });
+      orientationController.start(function () {
+        status.textContent = 'Move your phone to use the level.';
+      }, function () {
+        status.textContent = 'Orientation API is unavailable on this device/browser.';
+      });
+
+      setInterval(function () {
+        if (!orientationController) {
+          return;
+        }
+
+        var euler = orientationController.getScreenAdjustedEuler();
+        if (!euler) {
+          return;
+        }
+
+        pitch = euler.beta || 0;
+        roll = euler.gamma || 0;
+      }, 50);
+    }
+
+    enableMotionButton.addEventListener('click', function () {
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission().then(function (permissionState) {
+          if (permissionState === 'granted') {
+            start();
+          } else {
+            status.textContent = 'Motion permission denied.';
+          }
+        }).catch(function () {
+          status.textContent = 'Could not request motion permission.';
+        });
+      } else {
+        start();
+      }
+    });
+
+    fullscreenButton.addEventListener('click', function () {
+      if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        }
+      } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    });
+
+    orientationLockButton.addEventListener('click', function () {
+      if (!screen.orientation || !screen.orientation.lock) {
+        status.textContent = 'Orientation lock is not supported in this browser.';
+        return;
+      }
+
+      if (!orientationLocked) {
+        screen.orientation.lock('portrait-primary').then(function () {
+          orientationLocked = true;
+          updateOrientationLockButton();
+        }).catch(function () {
+          status.textContent = 'Could not lock orientation (fullscreen may be required).';
+        });
+        return;
+      }
+
+      if (screen.orientation.unlock) {
+        screen.orientation.unlock();
+      }
+
+      orientationLocked = false;
+      updateOrientationLockButton();
+    });
+
+    window.addEventListener('resize', resize);
+
+    resize();
+    updateOrientationLockButton();
+    draw();
+  })();
+</script>
