@@ -6,41 +6,68 @@ permalink: /level
 
 <div id="level-app"></div>
 
-<script src="https://unpkg.com/fulltilt@0.7.1/dist/fulltilt.min.js"></script>
 <script src="https://unpkg.com/p5@1.11.7/lib/p5.min.js"></script>
 <script type="module">
-  import { h, render } from 'https://unpkg.com/preact@10.26.9/dist/preact.module.js';
-  import { useEffect, useMemo, useRef, useState } from 'https://unpkg.com/preact@10.26.9/hooks/dist/hooks.module.js';
+  import {
+    html,
+    render,
+    useEffect,
+    useRef,
+    useState
+  } from 'https://unpkg.com/htm@3.1.1/preact/standalone.module.js';
+
+  const STATES = {
+    Loading: 'loading',
+    Starting: 'starting',
+    Running: 'running',
+    Locked: 'locked',
+    Failed: 'failed'
+  };
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-
   const canRequestMotionPermission =
     typeof DeviceOrientationEvent !== 'undefined' &&
     typeof DeviceOrientationEvent.requestPermission === 'function';
 
-  function LevelApp() {
+  async function loadFullTilt() {
+    await import('https://unpkg.com/fulltilt@0.7.1/dist/fulltilt.min.js');
+
+    if (!window.FULLTILT || !window.FULLTILT.DeviceOrientation) {
+      throw new Error('Orientation library did not load.');
+    }
+
+    return window.FULLTILT.DeviceOrientation;
+  }
+
+  function LevelApp({ DeviceOrientation }) {
     const canvasContainerRef = useRef(null);
-    const sketchRef = useRef(null);
     const orientationRef = useRef({ roll: 0, pitch: 0 });
     const orientationControllerRef = useRef(null);
-    const intervalRef = useRef(null);
 
     const [roll, setRoll] = useState(0);
     const [pitch, setPitch] = useState(0);
-    const [started, setStarted] = useState(false);
-    const [status, setStatus] = useState('Ready.');
-    const [orientationLocked, setOrientationLocked] = useState(false);
+    const [appState, setAppState] = useState(STATES.Loading);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isFullscreen, setIsFullscreen] = useState(Boolean(document.fullscreenElement));
 
-    const lockButtonLabel = useMemo(
-      () => (orientationLocked ? 'Unlock orientation' : 'Lock orientation'),
-      [orientationLocked]
-    );
+    const stopOrientation = () => {
+      orientationControllerRef.current?.stop?.();
+      orientationControllerRef.current = null;
+    };
 
     useEffect(() => {
       const sketch = new p5((p) => {
         const getSize = () => Math.min(window.innerWidth * 0.8, 420);
 
-        const drawLevel = () => {
+        p.setup = () => {
+          p.createCanvas(getSize(), getSize()).parent(canvasContainerRef.current);
+        };
+
+        p.windowResized = () => {
+          p.resizeCanvas(getSize(), getSize());
+        };
+
+        p.draw = () => {
           const width = p.width;
           const height = p.height;
           const centerX = width / 2;
@@ -72,57 +99,38 @@ permalink: /level
           p.text(`roll: ${orientationRef.current.roll.toFixed(1)}°`, centerX, height - 34);
           p.text(`pitch: ${orientationRef.current.pitch.toFixed(1)}°`, centerX, height - 14);
         };
-
-        p.setup = () => {
-          p.createCanvas(getSize(), getSize()).parent(canvasContainerRef.current);
-        };
-
-        p.windowResized = () => {
-          p.resizeCanvas(getSize(), getSize());
-        };
-
-        p.draw = () => {
-          drawLevel();
-        };
       });
 
-      sketchRef.current = sketch;
+      const onFullscreenChange = () => {
+        setIsFullscreen(Boolean(document.fullscreenElement));
+      };
+
+      document.addEventListener('fullscreenchange', onFullscreenChange);
 
       return () => {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-        }
-
-        if (orientationControllerRef.current && typeof orientationControllerRef.current.stop === 'function') {
-          orientationControllerRef.current.stop();
-        }
-
+        document.removeEventListener('fullscreenchange', onFullscreenChange);
+        stopOrientation();
         sketch.remove();
       };
     }, []);
 
+    const updateFailedState = (message) => {
+      setErrorMessage(message);
+      setAppState(STATES.Failed);
+    };
+
     const startOrientation = () => {
-      if (started) {
-        return;
-      }
+      stopOrientation();
+      setErrorMessage('');
+      setAppState(STATES.Starting);
 
-      if (typeof FULLTILT === 'undefined' || !FULLTILT.DeviceOrientation) {
-        setStatus('Orientation library did not load.');
-        return;
-      }
+      const controller = new DeviceOrientation({ type: 'game' });
+      orientationControllerRef.current = controller;
 
-      setStarted(true);
-      setStatus('Starting orientation sensor...');
-
-      const orientationController = new FULLTILT.DeviceOrientation({ type: 'game' });
-      orientationControllerRef.current = orientationController;
-
-      orientationController.start(
+      controller.start(
         () => {
-          setStatus('Move your phone to use the level.');
-
-          intervalRef.current = window.setInterval(() => {
-            const euler = orientationController.getScreenAdjustedEuler();
+          controller.listen(() => {
+            const euler = controller.getScreenAdjustedEuler();
 
             if (!euler) {
               return;
@@ -134,11 +142,13 @@ permalink: /level
             orientationRef.current = { roll: nextRoll, pitch: nextPitch };
             setRoll(nextRoll);
             setPitch(nextPitch);
-          }, 50);
+          });
+
+          setAppState(STATES.Running);
         },
         () => {
-          setStatus('Orientation API is unavailable on this device/browser.');
-          setStarted(false);
+          stopOrientation();
+          updateFailedState('Orientation API is unavailable on this device/browser.');
         }
       );
     };
@@ -149,11 +159,11 @@ permalink: /level
           const permission = await DeviceOrientationEvent.requestPermission();
 
           if (permission !== 'granted') {
-            setStatus('Motion permission denied.');
+            updateFailedState('Motion permission denied.');
             return;
           }
         } catch (error) {
-          setStatus('Could not request motion permission.');
+          updateFailedState('Could not request motion permission.');
           return;
         }
       }
@@ -162,51 +172,84 @@ permalink: /level
     };
 
     const onToggleFullscreen = async () => {
-      if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen?.();
-        return;
-      }
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen?.();
+          return;
+        }
 
-      await document.exitFullscreen?.();
+        await document.exitFullscreen?.();
+      } catch (error) {
+        updateFailedState('Could not change fullscreen mode.');
+      }
     };
 
     const onToggleOrientationLock = async () => {
       if (!screen.orientation?.lock) {
-        setStatus('Orientation lock is not supported in this browser.');
+        updateFailedState('Orientation lock is not supported in this browser.');
         return;
       }
 
-      if (!orientationLocked) {
+      if (appState !== STATES.Locked) {
         try {
           await screen.orientation.lock('portrait-primary');
-          setOrientationLocked(true);
+          setErrorMessage('');
+          setAppState(STATES.Locked);
         } catch (error) {
-          setStatus('Could not lock orientation (fullscreen may be required).');
+          updateFailedState('Could not lock orientation (fullscreen may be required).');
         }
 
         return;
       }
 
       screen.orientation.unlock?.();
-      setOrientationLocked(false);
+      setErrorMessage('');
+      setAppState(STATES.Running);
     };
 
-    return h('div', null,
-      h('p', { id: 'level-status' }, status),
-      h('div', {
-        ref: canvasContainerRef,
-        style: 'display:block;margin:1rem auto;max-width:100%;width:max-content;background:#111;border-radius:12px;overflow:hidden;'
-      }),
-      h('p', {
-        style: 'display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;'
-      },
-        h('button', { type: 'button', onClick: onEnableMotion }, started ? 'Motion enabled' : 'Enable motion'),
-        h('button', { type: 'button', onClick: onToggleFullscreen }, 'Fullscreen'),
-        h('button', { type: 'button', onClick: onToggleOrientationLock }, lockButtonLabel)
-      ),
-      h('p', { style: 'text-align:center;margin-top:.5rem;' }, `roll ${roll.toFixed(1)}°, pitch ${pitch.toFixed(1)}°`)
-    );
+    const statusText = {
+      [STATES.Loading]: 'Ready.',
+      [STATES.Starting]: 'Starting orientation sensor...',
+      [STATES.Running]: 'Move your phone to use the level.',
+      [STATES.Locked]: 'Orientation locked.',
+      [STATES.Failed]: errorMessage || 'An error occurred.'
+    }[appState];
+
+    return html`
+      <div>
+        <p id="level-status">${statusText}</p>
+        <div
+          ref=${canvasContainerRef}
+          style="display:block;margin:1rem auto;max-width:100%;width:max-content;background:#111;border-radius:12px;overflow:hidden;"
+        ></div>
+        <p style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
+          <button type="button" onClick=${onEnableMotion}>
+            ${appState === STATES.Starting ? 'Starting…' : 'Enable motion'}
+          </button>
+          <button type="button" onClick=${onToggleFullscreen}>
+            ${isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+          </button>
+          <button
+            type="button"
+            onClick=${onToggleOrientationLock}
+            disabled=${appState !== STATES.Running && appState !== STATES.Locked}
+          >
+            ${appState === STATES.Locked ? 'Unlock orientation' : 'Lock orientation'}
+          </button>
+        </p>
+        <p style="text-align:center;margin-top:.5rem;">
+          roll ${roll.toFixed(1)}°, pitch ${pitch.toFixed(1)}°
+        </p>
+      </div>
+    `;
   }
 
-  render(h(LevelApp), document.getElementById('level-app'));
+  const appRoot = document.getElementById('level-app');
+
+  try {
+    const DeviceOrientation = await loadFullTilt();
+    render(html`<${LevelApp} DeviceOrientation=${DeviceOrientation} />`, appRoot);
+  } catch (error) {
+    render(html`<p id="level-status">${error?.message || 'Failed to load orientation library.'}</p>`, appRoot);
+  }
 </script>
