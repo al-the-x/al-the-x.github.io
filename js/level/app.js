@@ -1,15 +1,12 @@
 import {
   html,
-  useEffect,
+  useCallback,
   useRef,
   useState
 } from 'https://unpkg.com/htm@3.1.1/preact/standalone.module.js';
 
-import { createLevelCanvas } from './canvas-service.js';
-import {
-  canRequestMotionPermission,
-  createOrientationController
-} from './fulltilt-service.js';
+import { useCanvas } from './use-canvas.js';
+import { useOrientation } from './use-orientation.js';
 
 const STATES = {
   Loading: 'loading',
@@ -20,146 +17,75 @@ const STATES = {
 };
 
 export function LevelApp({ DeviceOrientation }) {
-  const canvasContainerRef = useRef(null);
   const orientationRef = useRef({ roll: 0, pitch: 0 });
-  const orientationControllerRef = useRef(null);
 
   const [roll, setRoll] = useState(0);
   const [pitch, setPitch] = useState(0);
   const [appState, setAppState] = useState(STATES.Loading);
   const [errorMessage, setErrorMessage] = useState('');
-  const [isFullscreen, setIsFullscreen] = useState(Boolean(document.fullscreenElement));
 
-  const stopOrientation = () => {
-    orientationControllerRef.current?.stop?.();
-  };
+  const onOrientationChange = useCallback(({ roll: nextRoll, pitch: nextPitch }) => {
+    orientationRef.current = {
+      roll: nextRoll,
+      pitch: nextPitch
+    };
+    setRoll(nextRoll);
+    setPitch(nextPitch);
+  }, []);
+
+  const { canvasRef } = useCanvas({ orientationRef });
+  const orientation = useOrientation({
+    DeviceOrientation,
+    onOrientationChange
+  });
 
   const updateFailedState = (message) => {
     setErrorMessage(message);
     setAppState(STATES.Failed);
   };
 
-  const startOrientation = (nextState = STATES.Running) => {
-    const controller = orientationControllerRef.current;
-
-    if (!controller) {
-      updateFailedState('Orientation API is unavailable on this device/browser.');
-      return;
+  const runAction = async (action) => {
+    try {
+      await action();
+    } catch (error) {
+      updateFailedState(error instanceof Error ? error.message : 'An error occurred.');
     }
+  };
 
+  const onEnableMotion = async () => {
     setErrorMessage('');
     setAppState(STATES.Starting);
 
-    controller.start(
-      () => {
-        setAppState(nextState);
-      },
-      () => {
-        stopOrientation();
-        updateFailedState('Orientation API is unavailable on this device/browser.');
-      }
-    );
-  };
-
-  useEffect(() => {
-    const sketch = createLevelCanvas({
-      container: canvasContainerRef.current,
-      orientationRef
+    await runAction(async () => {
+      await orientation.requestMotionPermission();
+      await orientation.start();
+      setAppState(STATES.Running);
     });
-
-    const onFullscreenChange = () => {
-      setIsFullscreen(Boolean(document.fullscreenElement));
-    };
-
-    document.addEventListener('fullscreenchange', onFullscreenChange);
-
-    return () => {
-      document.removeEventListener('fullscreenchange', onFullscreenChange);
-      stopOrientation();
-      sketch.remove();
-    };
-  }, []);
-
-  useEffect(() => {
-    const controller = createOrientationController(DeviceOrientation);
-
-    controller.listen(() => {
-      const euler = controller.getScreenAdjustedEuler();
-
-      if (!euler) {
-        return;
-      }
-
-      const nextPitch = euler.beta || 0;
-      const nextRoll = euler.gamma || 0;
-
-      orientationRef.current = { roll: nextRoll, pitch: nextPitch };
-      setRoll(nextRoll);
-      setPitch(nextPitch);
-    });
-
-    orientationControllerRef.current = controller;
-
-    return () => {
-      stopOrientation();
-      orientationControllerRef.current = null;
-    };
-  }, [DeviceOrientation]);
-
-  const onEnableMotion = async () => {
-    if (canRequestMotionPermission) {
-      try {
-        const permission = await DeviceOrientationEvent.requestPermission();
-
-        if (permission !== 'granted') {
-          updateFailedState('Motion permission denied.');
-          return;
-        }
-      } catch (error) {
-        updateFailedState('Could not request motion permission.');
-        return;
-      }
-    }
-
-    startOrientation();
   };
 
   const onToggleFullscreen = async () => {
-    try {
-      if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen?.();
-        return;
-      }
-
-      await document.exitFullscreen?.();
-    } catch (error) {
-      updateFailedState('Could not change fullscreen mode.');
-    }
+    await runAction(async () => {
+      await orientation.toggleFullscreen();
+    });
   };
 
   const onToggleOrientationLock = async () => {
-    if (!screen.orientation?.lock) {
-      updateFailedState('Orientation lock is not supported in this browser.');
-      return;
-    }
-
-    if (appState !== STATES.Locked) {
-      try {
-        await screen.orientation.lock('portrait-primary');
+    await runAction(async () => {
+      if (appState !== STATES.Locked) {
+        await orientation.lockPortrait();
         setErrorMessage('');
-        stopOrientation();
-        startOrientation(STATES.Locked);
-      } catch (error) {
-        updateFailedState('Could not lock orientation (fullscreen may be required).');
+        orientation.stop();
+        await orientation.start();
+        setAppState(STATES.Locked);
+        return;
       }
 
-      return;
-    }
-
-    screen.orientation.unlock?.();
-    setErrorMessage('');
-    stopOrientation();
-    startOrientation(STATES.Running);
+      orientation.unlockOrientation();
+      setErrorMessage('');
+      orientation.stop();
+      await orientation.start();
+      setAppState(STATES.Running);
+    });
   };
 
   const statusText = {
@@ -174,7 +100,7 @@ export function LevelApp({ DeviceOrientation }) {
     <div>
       <p id="level-status">${statusText}</p>
       <div
-        ref=${canvasContainerRef}
+        ref=${canvasRef}
         style="display:block;margin:1rem auto;max-width:100%;width:max-content;background:#111;border-radius:12px;overflow:hidden;"
       ></div>
       <p style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
@@ -182,7 +108,7 @@ export function LevelApp({ DeviceOrientation }) {
           ${appState === STATES.Starting ? 'Starting…' : 'Enable motion'}
         </button>
         <button type="button" onClick=${onToggleFullscreen}>
-          ${isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+          ${orientation.isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
         </button>
         <button
           type="button"

@@ -13,13 +13,17 @@ permalink: /level
   } from 'https://unpkg.com/htm@3.1.1/preact/standalone.module.js';
 
   import { LevelApp } from '/js/level/app.js';
+  import { ErrorBoundary } from '/js/level/error-boundary.js';
   import { getDeviceOrientationClass } from '/js/level/fulltilt-service.js';
 
   const appRoot = document.getElementById('level-app');
 
   try {
     const DeviceOrientation = getDeviceOrientationClass();
-    render(html`<${LevelApp} DeviceOrientation=${DeviceOrientation} />`, appRoot);
+    render(
+      html`<${ErrorBoundary}><${LevelApp} DeviceOrientation=${DeviceOrientation} /><//>`,
+      appRoot
+    );
   } catch (error) {
     render(html`<p id="level-status">${error?.message || 'Failed to load orientation library.'}</p>`, appRoot);
   }
