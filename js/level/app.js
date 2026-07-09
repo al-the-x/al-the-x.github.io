@@ -49,12 +49,12 @@ export function LevelApp({ DeviceOrientation }) {
 
   const onEnableMotion = async () => {
     appSignals.clearError();
-    appSignals.setState(STATES.STARTING);
+    appSignals.transitionInto(STATES.STARTING);
 
     await runAction(async () => {
       await orientation.requestMotionPermission();
       await orientation.start();
-      appSignals.setState(STATES.RUNNING);
+      appSignals.transitionInto(STATES.RUNNING);
     });
   };
 
@@ -71,7 +71,7 @@ export function LevelApp({ DeviceOrientation }) {
         appSignals.clearError();
         orientation.stop();
         await orientation.start();
-        appSignals.setState(STATES.LOCKED);
+        appSignals.transitionInto(STATES.LOCKED);
         return;
       }
 
@@ -79,7 +79,7 @@ export function LevelApp({ DeviceOrientation }) {
       appSignals.clearError();
       orientation.stop();
       await orientation.start();
-      appSignals.setState(STATES.RUNNING);
+      appSignals.transitionInto(STATES.RUNNING);
     });
   };
 
