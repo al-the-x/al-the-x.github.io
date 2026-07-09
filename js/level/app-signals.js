@@ -20,26 +20,21 @@ export function createAppSignals(initialState = STATES.LOADING) {
   const state = computed(() => app.value.state);
   const error = computed(() => app.value.error);
 
-  const transitionInto = (nextState) => {
+  const transitionInto = (nextStateOrError) => {
     app.value = {
       ...app.value,
-      state: nextState
+      ...(nextStateOrError instanceof Error
+        ? { state: STATES.FAILED, error: nextStateOrError }
+        : { state: nextStateOrError, error: null })
     };
   };
 
   const clearError = () => {
-    app.value = {
-      ...app.value,
-      error: null
-    };
+    transitionInto(app.value.state);
   };
 
   const fail = (nextError) => {
-    transitionInto(STATES.FAILED);
-    app.value = {
-      ...app.value,
-      error: nextError
-    };
+    transitionInto(nextError);
   };
 
   return {
