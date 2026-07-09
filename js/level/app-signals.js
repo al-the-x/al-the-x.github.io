@@ -4,14 +4,14 @@ import {
 } from 'https://esm.sh/@preact/signals@1.3.2';
 
 export const STATES = {
-  Loading: 'loading',
-  Starting: 'starting',
-  Running: 'running',
-  Locked: 'locked',
-  Failed: 'failed'
+  LOADING: Symbol('LOADING'),
+  STARTING: Symbol('STARTING'),
+  RUNNING: Symbol('RUNNING'),
+  LOCKED: Symbol('LOCKED'),
+  FAILED: Symbol('FAILED')
 };
 
-export function createAppSignals(initialState = STATES.Loading) {
+export function createAppSignals(initialState = STATES.LOADING) {
   const app = signal({
     state: initialState,
     error: null
@@ -36,7 +36,7 @@ export function createAppSignals(initialState = STATES.Loading) {
 
   const fail = (nextError) => {
     app.value = {
-      state: STATES.Failed,
+      state: STATES.FAILED,
       error: nextError
     };
   };

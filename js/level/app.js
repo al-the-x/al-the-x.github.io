@@ -49,12 +49,12 @@ export function LevelApp({ DeviceOrientation }) {
 
   const onEnableMotion = async () => {
     appSignals.clearError();
-    appSignals.setState(STATES.Starting);
+    appSignals.setState(STATES.STARTING);
 
     await runAction(async () => {
       await orientation.requestMotionPermission();
       await orientation.start();
-      appSignals.setState(STATES.Running);
+      appSignals.setState(STATES.RUNNING);
     });
   };
 
@@ -66,12 +66,12 @@ export function LevelApp({ DeviceOrientation }) {
 
   const onToggleOrientationLock = async () => {
     await runAction(async () => {
-      if (appSignals.state.value !== STATES.Locked) {
+      if (appSignals.state.value !== STATES.LOCKED) {
         await orientation.lockPortrait();
         appSignals.clearError();
         orientation.stop();
         await orientation.start();
-        appSignals.setState(STATES.Locked);
+        appSignals.setState(STATES.LOCKED);
         return;
       }
 
@@ -79,18 +79,18 @@ export function LevelApp({ DeviceOrientation }) {
       appSignals.clearError();
       orientation.stop();
       await orientation.start();
-      appSignals.setState(STATES.Running);
+      appSignals.setState(STATES.RUNNING);
     });
   };
 
   const appState = appSignals.state.value;
   const appError = appSignals.error.value;
   const statusText = {
-    [STATES.Loading]: 'Ready.',
-    [STATES.Starting]: 'Starting orientation sensor...',
-    [STATES.Running]: 'Move your phone to use the level.',
-    [STATES.Locked]: 'Orientation locked.',
-    [STATES.Failed]: appError?.message || 'An error occurred.'
+    [STATES.LOADING]: 'Ready.',
+    [STATES.STARTING]: 'Starting orientation sensor...',
+    [STATES.RUNNING]: 'Move your phone to use the level.',
+    [STATES.LOCKED]: 'Orientation locked.',
+    [STATES.FAILED]: appError?.message || 'An error occurred.'
   }[appState];
 
   return html`
@@ -102,7 +102,7 @@ export function LevelApp({ DeviceOrientation }) {
       ></div>
       <p style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
         <button type="button" onClick=${onEnableMotion}>
-          ${appState === STATES.Starting ? 'Starting…' : 'Enable motion'}
+          ${appState === STATES.STARTING ? 'Starting…' : 'Enable motion'}
         </button>
         <button type="button" onClick=${onToggleFullscreen}>
           ${orientation.isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
@@ -110,9 +110,9 @@ export function LevelApp({ DeviceOrientation }) {
         <button
           type="button"
           onClick=${onToggleOrientationLock}
-          disabled=${appState !== STATES.Running && appState !== STATES.Locked}
+          disabled=${appState !== STATES.RUNNING && appState !== STATES.LOCKED}
         >
-          ${appState === STATES.Locked ? 'Unlock orientation' : 'Lock orientation'}
+          ${appState === STATES.LOCKED ? 'Unlock orientation' : 'Lock orientation'}
         </button>
       </p>
       <p style="text-align:center;margin-top:.5rem;">
