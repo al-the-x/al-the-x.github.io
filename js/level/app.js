@@ -1,9 +1,6 @@
 import {
   html,
-  useCallback,
-  useMemo,
-  useRef,
-  useState
+  useMemo
 } from 'https://unpkg.com/htm@3.1.1/preact/standalone.module.js';
 
 import {
@@ -14,26 +11,9 @@ import { useCanvas } from './use-canvas.js';
 import { useOrientation } from './use-orientation.js';
 
 export function LevelApp({ DeviceOrientation }) {
-  const orientationRef = useRef({ roll: 0, pitch: 0 });
   const appSignals = useMemo(() => createAppSignals(), []);
-
-  const [roll, setRoll] = useState(0);
-  const [pitch, setPitch] = useState(0);
-
-  const onOrientationChange = useCallback(({ roll: nextRoll, pitch: nextPitch }) => {
-    orientationRef.current = {
-      roll: nextRoll,
-      pitch: nextPitch
-    };
-    setRoll(nextRoll);
-    setPitch(nextPitch);
-  }, []);
-
-  const { canvasRef } = useCanvas({ orientationRef });
-  const orientation = useOrientation({
-    DeviceOrientation,
-    onOrientationChange
-  });
+  const orientation = useOrientation({ DeviceOrientation });
+  const { canvasRef } = useCanvas({ orientationRef: orientation.orientationRef });
 
   const updateFailedState = (error) => {
     appSignals.fail(error);
@@ -116,7 +96,7 @@ export function LevelApp({ DeviceOrientation }) {
         </button>
       </p>
       <p style="text-align:center;margin-top:.5rem;">
-        roll ${roll.toFixed(1)}°, pitch ${pitch.toFixed(1)}°
+        roll ${orientation.roll.toFixed(1)}°, pitch ${orientation.pitch.toFixed(1)}°
       </p>
     </div>
   `;

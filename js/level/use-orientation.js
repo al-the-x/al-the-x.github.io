@@ -10,7 +10,7 @@ import {
   createOrientationController
 } from './fulltilt-service.js';
 
-export function useOrientation({ DeviceOrientation, onOrientationChange }) {
+export function useOrientation({ DeviceOrientation }) {
   const controller = useMemo(() => {
     if (!DeviceOrientation) {
       throw new Error('Orientation API is unavailable on this device/browser.');
@@ -20,6 +20,9 @@ export function useOrientation({ DeviceOrientation, onOrientationChange }) {
   }, [DeviceOrientation]);
 
   const controllerRef = useRef(controller);
+  const orientationRef = useRef({ roll: 0, pitch: 0 });
+  const [roll, setRoll] = useState(0);
+  const [pitch, setPitch] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(Boolean(document.fullscreenElement));
 
   useEffect(() => {
@@ -32,16 +35,19 @@ export function useOrientation({ DeviceOrientation, onOrientationChange }) {
         return;
       }
 
-      onOrientationChange({
+      const nextOrientation = {
         roll: euler.gamma || 0,
         pitch: euler.beta || 0
-      });
+      };
+      orientationRef.current = nextOrientation;
+      setRoll(nextOrientation.roll);
+      setPitch(nextOrientation.pitch);
     });
 
     return () => {
       controller.stop?.();
     };
-  }, [controller, onOrientationChange]);
+  }, [controller]);
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -114,6 +120,9 @@ export function useOrientation({ DeviceOrientation, onOrientationChange }) {
   };
 
   return {
+    orientationRef,
+    roll,
+    pitch,
     isFullscreen,
     start,
     stop,
