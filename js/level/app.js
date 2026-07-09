@@ -1,28 +1,24 @@
 import {
   html,
   useCallback,
+  useMemo,
   useRef,
   useState
 } from 'https://unpkg.com/htm@3.1.1/preact/standalone.module.js';
 
+import {
+  createAppSignals,
+  STATES
+} from './app-signals.js';
 import { useCanvas } from './use-canvas.js';
 import { useOrientation } from './use-orientation.js';
 
-const STATES = {
-  Loading: 'loading',
-  Starting: 'starting',
-  Running: 'running',
-  Locked: 'locked',
-  Failed: 'failed'
-};
-
 export function LevelApp({ DeviceOrientation }) {
   const orientationRef = useRef({ roll: 0, pitch: 0 });
+  const appSignals = useMemo(() => createAppSignals(), []);
 
   const [roll, setRoll] = useState(0);
   const [pitch, setPitch] = useState(0);
-  const [appState, setAppState] = useState(STATES.Loading);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const onOrientationChange = useCallback(({ roll: nextRoll, pitch: nextPitch }) => {
     orientationRef.current = {
@@ -39,27 +35,26 @@ export function LevelApp({ DeviceOrientation }) {
     onOrientationChange
   });
 
-  const updateFailedState = (message) => {
-    setErrorMessage(message);
-    setAppState(STATES.Failed);
+  const updateFailedState = (error) => {
+    appSignals.fail(error);
   };
 
   const runAction = async (action) => {
     try {
       await action();
     } catch (error) {
-      updateFailedState(error instanceof Error ? error.message : 'An error occurred.');
+      updateFailedState(error instanceof Error ? error : new Error('An error occurred.'));
     }
   };
 
   const onEnableMotion = async () => {
-    setErrorMessage('');
-    setAppState(STATES.Starting);
+    appSignals.clearError();
+    appSignals.setState(STATES.Starting);
 
     await runAction(async () => {
       await orientation.requestMotionPermission();
       await orientation.start();
-      setAppState(STATES.Running);
+      appSignals.setState(STATES.Running);
     });
   };
 
@@ -71,29 +66,31 @@ export function LevelApp({ DeviceOrientation }) {
 
   const onToggleOrientationLock = async () => {
     await runAction(async () => {
-      if (appState !== STATES.Locked) {
+      if (appSignals.state.value !== STATES.Locked) {
         await orientation.lockPortrait();
-        setErrorMessage('');
+        appSignals.clearError();
         orientation.stop();
         await orientation.start();
-        setAppState(STATES.Locked);
+        appSignals.setState(STATES.Locked);
         return;
       }
 
       orientation.unlockOrientation();
-      setErrorMessage('');
+      appSignals.clearError();
       orientation.stop();
       await orientation.start();
-      setAppState(STATES.Running);
+      appSignals.setState(STATES.Running);
     });
   };
 
+  const appState = appSignals.state.value;
+  const appError = appSignals.error.value;
   const statusText = {
     [STATES.Loading]: 'Ready.',
     [STATES.Starting]: 'Starting orientation sensor...',
     [STATES.Running]: 'Move your phone to use the level.',
     [STATES.Locked]: 'Orientation locked.',
-    [STATES.Failed]: errorMessage || 'An error occurred.'
+    [STATES.Failed]: appError?.message || 'An error occurred.'
   }[appState];
 
   return html`
