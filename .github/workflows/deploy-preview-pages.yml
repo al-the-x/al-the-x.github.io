@@ -30,7 +30,7 @@ jobs:
           bundler-cache: true
 
       - name: Build site
-        run: bundle exec jekyll build --destination _site --exclude vendor
+        run: bundle exec jekyll build --destination _site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

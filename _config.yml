@@ -7,6 +7,7 @@ exclude:
   - package.json
   - bower_components/
   - node_modules/
+  - vendor/
 
 defaults:
   - scope:
@@ -14,4 +15,3 @@ defaults:
       type: "pages"
     values:
       layout: "default"
-
