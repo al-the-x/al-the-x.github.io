@@ -1,0 +1,111 @@
+name: Update Dependencies Weekly
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+env:
+  # Built-in token automatically provided to each workflow run by GitHub Actions.
+  WORKFLOW_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # User-to-server token from GitHub Settings -> Developer settings -> Personal access tokens.
+  # Save this value as a repository secret named COPILOT_AGENT_TOKEN.
+  COPILOT_AGENT_TOKEN: ${{ secrets.COPILOT_AGENT_TOKEN }}
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  consolidate-dependabot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure Copilot token is configured
+        if: ${{ env.COPILOT_AGENT_TOKEN == '' }}
+        run: |
+          echo "Repository secret COPILOT_AGENT_TOKEN is required (user-to-server token)."
+          exit 1
+
+      - name: Find open Dependabot PRs and issues
+        id: discover
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ env.WORKFLOW_GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const [pulls, issues] = await Promise.all([
+              github.paginate(github.rest.pulls.list, {
+                owner,
+                repo,
+                state: 'open',
+                per_page: 100
+              }),
+              github.paginate(github.rest.issues.listForRepo, {
+                owner,
+                repo,
+                state: 'open',
+                per_page: 100
+              })
+            ]);
+
+            const dependabotPulls = pulls.filter((pr) => pr.user?.login === 'dependabot[bot]');
+            const dependabotIssues = issues
+              .filter((issue) => !issue.pull_request)
+              .filter((issue) => issue.user?.login === 'dependabot[bot]');
+
+            const refs = [
+              ...dependabotPulls.map((pr) => `PR #${pr.number}: ${pr.title}`),
+              ...dependabotIssues.map((issue) => `Issue #${issue.number}: ${issue.title}`)
+            ];
+
+            core.setOutput('has_items', refs.length > 0 ? 'true' : 'false');
+
+            if (refs.length === 0) {
+              core.setOutput('prompt', '');
+              return;
+            }
+
+            const closingKeywords = [
+              ...dependabotPulls.map((pr) => `Closes #${pr.number}`),
+              ...dependabotIssues.map((issue) => `Closes #${issue.number}`)
+            ].join(', ');
+
+            const prompt = [
+              'Create one consolidated pull request to replace the currently open Dependabot work listed below.',
+              'Group compatible updates together in that PR and include test/build updates needed to keep CI green.',
+              'In the PR description include this exact closing line:',
+              closingKeywords,
+              '',
+              'Superseded Dependabot items:',
+              ...refs.map((line) => `- ${line}`)
+            ].join('\n');
+
+            core.setOutput('prompt', prompt);
+
+      - name: Skip when nothing to consolidate
+        if: ${{ steps.discover.outputs.has_items != 'true' }}
+        run: echo "No open Dependabot PRs or issues found."
+
+      - name: Start Copilot cloud agent task
+        if: ${{ steps.discover.outputs.has_items == 'true' }}
+        env:
+          GH_TOKEN: ${{ env.COPILOT_AGENT_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PROMPT: ${{ steps.discover.outputs.prompt }}
+        run: |
+          payload=$(jq -n \
+            --arg prompt "$PROMPT" \
+            --arg base_ref "$DEFAULT_BRANCH" \
+            '{prompt: $prompt, base_ref: $base_ref, create_pull_request: true}')
+
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/agents/repos/$OWNER/$REPO/tasks" \
+            --input - <<< "$payload"
