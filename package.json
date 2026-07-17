@@ -29,7 +29,7 @@
     "bower": "^1.7.2",
     "cdnjs-cdn-data": "^0.1.2",
     "del": "^2.2.0",
-    "gulp": "^3.9.0",
+    "gulp": "^5.0.1",
     "gulp-concat": "^2.6.0",
     "gulp-if": "^2.0.0",
     "gulp-jstransformer": "^0.2.0",
@@ -38,7 +38,7 @@
     "jstransformer": "0.0.4",
     "jstransformer-jade": "^0.1.0",
     "jstransformer-markdown-it": "^0.2.2",
-    "lodash": "^3.10.1",
+    "lodash": "^4.18.1",
     "main-bower-files": "^2.11.1"
   }
 }
